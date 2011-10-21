@@ -5,7 +5,7 @@
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Dzz/workspace/StudentPage/war/WEB-INF/lib/smartgwt.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dzz/workspace/StudentPage/war/WEB-INF/lib/smartgwt-skins.jar"/>
+	<classpathentry kind="lib" path="/Users/Douglaz/Documents/workspace/CPP/smartgwt-2.5/smartgwt-skins.jar"/>
+	<classpathentry kind="lib" path="/Users/Douglaz/Documents/workspace/CPP/smartgwt-2.5/smartgwt.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
