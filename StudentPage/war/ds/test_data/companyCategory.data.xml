@@ -1,0 +1,34 @@
+<List>
+<companyCategory>
+    <categoryName>Banking</categoryName>
+    <parentID>root</parentID>
+</companyCategory>
+<companyCategory>
+    <categoryName>Investment Banking</categoryName>
+    <parentID>Banking</parentID>
+</companyCategory>
+<companyCategory>
+    <categoryName>Retail Banking</categoryName>
+    <parentID>Banking</parentID>
+</companyCategory>
+<companyCategory>
+    <categoryName>IT</categoryName>
+    <parentID>root</parentID>
+</companyCategory>
+<companyCategory>
+    <categoryName>Software</categoryName>
+    <parentID>IT</parentID>
+</companyCategory>
+<companyCategory>
+    <categoryName>Web Service</categoryName>
+    <parentID>Software</parentID>
+</companyCategory>
+<companyCategory>
+    <categoryName>Operating System</categoryName>
+    <parentID>Software</parentID>
+</companyCategory>
+<companyCategory>
+    <categoryName>Hardware</categoryName>
+    <parentID>IT</parentID>
+</companyCategory>
+</List>

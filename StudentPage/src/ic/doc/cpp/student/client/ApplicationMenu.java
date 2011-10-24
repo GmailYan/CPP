@@ -26,14 +26,15 @@ public class ApplicationMenu extends HLayout {
 		GWT.log("init ApplicationMenu()...", null);
 			
 	    // initialise the Application Menu layout container
-		this.addStyleName("crm-ApplicationMenu");	
-	    this.setHeight(APPLICATION_MENU_HEIGHT);
-
+		addStyleName("crm-ApplicationMenu");	
+	    setHeight(APPLICATION_MENU_HEIGHT);
+	    setBackgroundColor("#1589FF");
+	    
 	    // initialise the Menu Bar
 		menuBar = new MenuBar();
 		
 		// add the Menu Bar to the Application Menu layout container
-		this.addMember(menuBar);  	    
+		addMember(menuBar);  	    
 	  }
 	  
 	  public Menu addMenu(String menuName, int width, String menuItemNames, ClickHandler clickHandler) {

@@ -2,12 +2,8 @@ package ic.doc.cpp.student.client;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.menu.events.ClickHandler;
-import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
 
 public class Masthead extends HLayout {
 	
@@ -19,9 +15,9 @@ public class Masthead extends HLayout {
 		GWT.log("init Masthead()...", null);
 		
 	    // initialise the Masthead layout container
-		this.addStyleName("crm-Masthead");	
-	    this.setHeight(MASTHEAD_HEIGHT);
-	    
+		addStyleName("crm-Masthead");	
+	    setHeight(MASTHEAD_HEIGHT);
+	    setBackgroundColor("#6960EC");
 		// initialise the Logo image
 //	    Img logo = new Img("logo.png", 48, 48); 
 //	    logo.addStyleName("crm-Masthead-Logo");	  

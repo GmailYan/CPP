@@ -12,14 +12,15 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.menu.Menu;
+import com.smartgwt.client.widgets.layout.events.SectionHeaderClickEvent;
+import com.smartgwt.client.widgets.layout.events.SectionHeaderClickHandler;
 import com.smartgwt.client.widgets.menu.events.ClickHandler;
 import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
 
 public class StudentPage implements EntryPoint {
 	 private static final int NORTH_HEIGHT = 85; // MASTHEAD_HEIGHT + APPLICATION_MENU_HEIGHT
-	  private static final int DEFAULT_MENU_WIDTH = 70;
 	  
 	  private VLayout mainLayout;	
 	  private HLayout northLayout;  
@@ -60,26 +61,11 @@ public class StudentPage implements EntryPoint {
 	    
 	    // initialise the Application menu
 	    applicationMenu = new ApplicationMenu();
-	    applicationMenu.addMenu("User", 100, "Profile, Log out", new ApplicationMenuClickHandler());
-//	    applicationMenu.addMenu("<u>N</u>ew Activity", DEFAULT_MENU_WIDTH, 
-//	    						"Task, Fax, Phone Call, Email, Letter, " + 
-//	    						"Appointment", new ApplicationMenuClickHandler());
-//	    applicationMenu.addMenu("New Re<u>c</u>ord", DEFAULT_MENU_WIDTH, 
-//								"Account, Contact, separator, Lead, Opportunity",
-//								new ApplicationMenuClickHandler());
-//	    Menu goToMenu = applicationMenu.addMenu("<u>G</u>o To", 100);
-//	    applicationMenu.addSubMenu(goToMenu, "Sales", "Leads, Opportunities, Accounts, Contacts",
-//	    						   new ApplicationMenuClickHandler());
-//	    applicationMenu.addSubMenu(goToMenu, "Settings", "Administration, Templates, Data Management",
-//	    						   new ApplicationMenuClickHandler());
-//	    applicationMenu.addSubMenu(goToMenu, "Resource Centre", "Highlights, Sales, Settings",
-//	    						   new ApplicationMenuClickHandler());
-//	    applicationMenu.addMenu("<u>T</u>ools", DEFAULT_MENU_WIDTH - 30, 
-//								"Import Data, Duplicate Detection, Advanced Find, Options",
-//								new ApplicationMenuClickHandler());
+	    applicationMenu.addMenu("<u>U</u>ser", 100, "Profile, Log out", new ApplicationMenuClickHandler());
 	    applicationMenu.addMenu("<u>H</u>elp", 100, 
 								"Help on this Page, Contents, About CPP-Student",
 								new ApplicationMenuClickHandler());
+	    
 	    // add the Application Menu to the nested layout container
 	    vLayout.addMember(applicationMenu);
 	    
@@ -87,13 +73,19 @@ public class StudentPage implements EntryPoint {
 	    northLayout.addMember(vLayout);
 	    
 	    // initialise the Navigation Pane
-	    NavigationPane navigationPane = new NavigationPane();
-	    navigationPane.add("Profile", SalesNavigationPaneSectionData.getRecords(), 
-	    					new NavigationPaneClickHandler());
-	    navigationPane.add("Company Category", SettingsNavigationPaneSectionData.getRecords(), 
-						   new NavigationPaneClickHandler());
-//	    navigationPane.add("Resource Centre", ResourceCentreNavigationPaneSectionData.getRecords(), 
-//				   		   new NavigationPaneClickHandler());
+	    NavigationPane navigationPane = new NavigationPane(new NavigationPaneSectionHeaderClickHandler());
+	    CategorySectionStackSection companyCategorySection = new CompanyCategorySection("Comapany Category", 
+	    		CompanyCategoryTreeGrid.getInstance(), new CompanyDataView.Factory());
+	    
+	    navigationPane.addCategorySection(companyCategorySection);
+	    
+	    CategorySectionStackSection eventCategorySection = new EventCategorySection("Event Category", 
+	    		EventCategoryTreeGrid.getInstance(), new EventDataView.Factory());
+	    
+	    navigationPane.addCategorySection(eventCategorySection);
+	    
+	    navigationPane.addListgridSection("Tools", ToolsNavigationPaneSectionData.getNewRecords(), 
+	    		new NavigationPaneClickHandler());
 	    
 	    // select the first Navigation Pane section e.g Sales
 	    navigationPane.expandSection(0);
@@ -102,7 +94,7 @@ public class StudentPage implements EntryPoint {
 	    westLayout = navigationPane;
 	    
 	    // initialise the East layout container
-	    eastLayout = new GeneralInformationView(); 
+	    eastLayout = (VLayout) new CompanyDataView.Factory().create(); 
 	    
 	    // initialise the South layout container
 	    southLayout = new HLayout(); 
@@ -128,16 +120,29 @@ public class StudentPage implements EntryPoint {
 
 	  }
 	  
+	  private class NavigationPaneSectionHeaderClickHandler implements SectionHeaderClickHandler {
+
+			@Override
+			public void onSectionHeaderClick(SectionHeaderClickEvent event) {
+				SectionStackSection section = event.getSection();
+				if (section instanceof CategorySectionStackSection) {
+					section.setExpanded(false);
+					ContextAreaFactory factory = ((CategorySectionStackSection)section).getFactory();
+					Canvas view = factory.create();
+					southLayout.setMembers(westLayout, view);
+				}
+			}
+	  }
+	  
 	  private class NavigationPaneClickHandler implements RecordClickHandler {
 		@Override
 		public void onRecordClick(RecordClickEvent event) {
-		  NavigationPaneRecord record = (NavigationPaneRecord) event.getRecord();
+		  ListgridSectionStackSectionRecord record = (ListgridSectionStackSectionRecord) event.getRecord();
 		  setContextAreaView(record);
 		}
-
 	  }    
 	  
-	  private void setContextAreaView(NavigationPaneRecord record) {
+	  private void setContextAreaView(ListgridSectionStackSectionRecord record) {
 	    ContextAreaFactory factory = record.getFactory();
 		Canvas view = factory.create();
 		southLayout.setMembers(westLayout, view);   

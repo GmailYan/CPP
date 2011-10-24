@@ -1,0 +1,42 @@
+<List>
+<companyDetail>
+    <CID>000001</CID>
+    <category>Banking/Investment Banking</category>
+    <name>Morgan Stanley</name>
+    <description>Investment bank</description>
+    <website>www.morganstanley.com</website>
+    <logo>morganstanley.jpg</logo>
+</companyDetail>
+<companyDetail>
+    <CID>000002</CID>
+    <category>Banking/Retail Banking</category>
+    <name>ABC</name>
+    <description>China bank</description>
+    <website>www.abc.com.cn</website>
+    <logo>abc.jpg</logo>
+</companyDetail>
+<companyDetail>
+    <CID>000003</CID>
+    <category>IT/Software/Operating System</category>
+    <name>Microsoft</name>
+    <description>big software company</description>
+    <website>www.microsoft.com</website>
+    <logo>microsoft.jpg</logo>
+</companyDetail>
+<companyDetail>
+    <CID>000004</CID>
+    <category>IT/Software/Web Service</category>
+    <name>Google</name>
+    <description>search engine</description>
+    <website>www.google.com</website>
+    <logo>google.jpg</logo>
+</companyDetail>
+<companyDetail>
+    <CID>000005</CID>
+    <category>IT/Hardware</category>
+    <name>Intel</name>
+    <description>good processor producer</description>
+    <website>www.intel.com</website>
+    <logo>intel.jpg</logo>
+</companyDetail>
+</List>

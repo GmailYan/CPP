@@ -1,0 +1,38 @@
+<List>
+<eventDetail>
+    <EID>000001</EID>
+    <title>MS Summer Internship</title>
+    <category>Internship/Summer Internship</category>
+    <CID>000001</CID>
+    <companyName>Morgan Stanley</companyName>
+    <description>a good internship</description>
+    <website>www.morganstanley.com</website>
+    <startDate>2012-07-01</startDate>
+    <endDate>2012-09-01</endDate>
+    <picture>morganstanley.jpg</picture>
+</eventDetail>
+<eventDetail>
+    <EID>000002</EID>
+    <title>MS Spring Internship</title>
+    <category>Internship/Spring Internship</category>
+    <CID>000001</CID>
+    <companyName>Morgan Stanley</companyName>
+    <description>a good internship</description>
+    <website>www.morganstanley.com</website>
+    <startDate>2012-01-01</startDate>
+    <endDate>2012-01-01</endDate>
+    <picture>morganstanley.jpg</picture>
+</eventDetail>
+<eventDetail>
+    <EID>000001</EID>
+    <title>ABC Talk</title>
+    <category>Presentation</category>
+    <CID>000001</CID>
+    <companyName>ABC</companyName>
+    <description>a good presentation</description>
+    <website>www.abc.com.cn</website>
+    <startDate>2012-01-01</startDate>
+    <endDate>2012-01-01</endDate>
+    <picture>abc.jpg</picture>
+</eventDetail>
+</List>

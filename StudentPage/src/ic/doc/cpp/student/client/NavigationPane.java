@@ -5,15 +5,15 @@ import com.smartgwt.client.types.VisibilityMode;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.layout.events.SectionHeaderClickHandler;
 
 public class NavigationPane extends VLayout {
 	 private static final int WEST_WIDTH = 200;
 	  
-	  private SectionStack sectionStack ;
+	  private SectionStack navigationSectionStack ;
 		
-	  public NavigationPane() {
+	  public NavigationPane(SectionHeaderClickHandler handler) {
 		super();
-					
 		GWT.log("init NavigationPane()...", null);
 		
 	    // initialise the Navigation Pane layout container
@@ -22,23 +22,29 @@ public class NavigationPane extends VLayout {
 	    // this.setShowResizeBar(true); 
 		
 		// initialise the Section Stack
-	    sectionStack = new SectionStack();
-	    sectionStack.setWidth(WEST_WIDTH);
-	    sectionStack.setVisibilityMode(VisibilityMode.MUTEX);
-	    sectionStack.setShowExpandControls(true);
-	    sectionStack.setAnimateSections(true);	
+	    navigationSectionStack = new SectionStack();
+	    navigationSectionStack.setWidth(WEST_WIDTH);
+	    navigationSectionStack.setVisibilityMode(VisibilityMode.MUTEX);
+	    navigationSectionStack.setShowResizeBar(true);
+	    navigationSectionStack.setShowExpandControls(true);
+	    navigationSectionStack.setAnimateSections(true);	
+	    navigationSectionStack.addSectionHeaderClickHandler(handler);	
 	    
 	    // add the Section Stack to the Navigation Pane layout container
-		this.addMember(sectionStack); 
+		this.addMember(navigationSectionStack); 
 	  }	
 	  
-	  public void add(String sectionName, NavigationPaneRecord[] sectionData, 
+	  public void addListgridSection(String sectionName, ListgridSectionStackSectionRecord[] sectionData, 
 			  		  RecordClickHandler clickHandler) {
-		sectionStack.addSection(new NavigationPaneSection(sectionName, sectionData,
+		navigationSectionStack.addSection(new ListgridSectionStackSection(sectionName, sectionData,
 								clickHandler));
 	  } 
 
 	  public void expandSection(int section) {
-		sectionStack.expandSection(section);
-	  } 
+		navigationSectionStack.expandSection(section);
+	  }
+
+	public void addCategorySection(CategorySectionStackSection section) {
+		navigationSectionStack.addSection(section);
+	}
 }
