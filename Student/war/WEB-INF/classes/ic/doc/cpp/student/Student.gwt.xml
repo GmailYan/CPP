@@ -2,6 +2,7 @@
 <module rename-to='student'>
 	<!-- Inherit the core Web Toolkit stuff.                        -->
 	<inherits name='com.google.gwt.user.User'/>
+	<inherits name="com.google.gwt.http.HTTP" />
 	<inherits name='com.google.gwt.inject.Inject'/>
 	<inherits name='com.google.gwt.resources.Resources'/>
 
@@ -16,7 +17,6 @@
 	<inherits name='com.gwtplatform.mvp.Mvp'/>
 	<inherits name='com.gwtplatform.dispatch.Dispatch'/>
 	<inherits name="com.smartgwt.SmartGwt"/>
-	
 	<inherits name="com.smartgwt.SmartGwtNoTheme"/>  	
 	<inherits name="com.smartclient.theme.enterpriseblue.EnterpriseBlue"/>
 	<inherits name="com.smartclient.theme.enterpriseblue.EnterpriseBlueResources"/> 

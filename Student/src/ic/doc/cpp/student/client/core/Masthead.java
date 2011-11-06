@@ -24,7 +24,7 @@ public class Masthead extends HLayout {
 	    
 		// initialise the Name label	
 		Label name = new Label();  
-		name.addStyleName("crm-MastHead-Name");  
+		name.setStyleName("crm-MastHead-Name");  
 		name.setContents("CPP - Student"); 
 	    
 	    // initialise the West layout container

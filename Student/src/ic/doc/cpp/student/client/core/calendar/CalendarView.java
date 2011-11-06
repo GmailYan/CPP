@@ -1,7 +1,5 @@
 package ic.doc.cpp.student.client.core.calendar;
 
-import ic.doc.cpp.student.client.core.calendar.CalendarPresenter.MyView;
-
 import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.inject.Inject;
 import com.google.gwt.user.client.ui.Widget;

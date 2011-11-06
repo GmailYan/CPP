@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tree.TreeGrid;
 
 public class StudentPageView extends ViewImpl implements
 		StudentPagePresenter.MyView {
@@ -21,12 +22,14 @@ public class StudentPageView extends ViewImpl implements
 	private HLayout southLayout;
 	private VLayout westLayout;
 	private VLayout eastLayout;
-  
+
 	private final ApplicationMenu applicationMenu ;
 	private final Masthead masthead;
 	private final NavigationPane navigationPane;
-	private final CompanyCategoryTreeGrid companyCategoryTreeGrid;
+	
+	private VLayout companyCategoryTreeGridSlot;
 	private final EventCategoryTreeGrid eventCategoryTreeGrid;
+	
 	
 	@Inject
 	public StudentPageView() {
@@ -36,7 +39,6 @@ public class StudentPageView extends ViewImpl implements
 		masthead = new Masthead();
 		navigationPane = new NavigationPane();
 		
-		companyCategoryTreeGrid = CompanyCategoryTreeGrid.getInstance();
 		eventCategoryTreeGrid = EventCategoryTreeGrid.getInstance();
 		
 		// get rid of scroll bars and window's margin
@@ -81,9 +83,9 @@ public class StudentPageView extends ViewImpl implements
 	}
 	
 	private void initNavigationPane() {
+		companyCategoryTreeGridSlot = new VLayout();
 		CategorySectionStackSection companyCategorySection = 
-				new CompanyCategorySection("Comapany Category", NameTokens.companydata,
-						companyCategoryTreeGrid);
+				new CompanyCategorySection("Comapany Category", NameTokens.companydata, companyCategoryTreeGridSlot);
 		    
 		navigationPane.addCategorySection(companyCategorySection);
 		
@@ -116,6 +118,10 @@ public class StudentPageView extends ViewImpl implements
 			if (content != null) {
 				eastLayout.setMembers((VLayout)content);
 			}
+		} else if (slot == StudentPagePresenter.TYPE_RevealCompanyCategory) {
+			if (content != null) {
+				companyCategoryTreeGridSlot.setMembers((TreeGrid)content);
+			}
 		} else {
 			super.setInSlot(slot, content);
 		}
@@ -124,11 +130,6 @@ public class StudentPageView extends ViewImpl implements
 	@Override
 	public NavigationPane getNavigationPane() {
 		return navigationPane;
-	}
-	
-	@Override
-	public CompanyCategoryTreeGrid getCompanyCategoryTreeGrid() {
-		return companyCategoryTreeGrid;
 	}
 	
 	@Override

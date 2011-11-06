@@ -1,6 +1,5 @@
 package ic.doc.cpp.student.client.core.companydata;
 
-import ic.doc.cpp.student.client.core.CompanyCategoryTreeGrid;
 import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.inject.Inject;
 import com.google.gwt.core.client.GWT;
@@ -16,60 +15,48 @@ public class CompanyDataView extends ViewImpl implements
 		CompanyDataPresenter.MyView {
 	
 	private VLayout widget;
-	private SectionStack dataview;
-	private CompanyTileGrid companyTileGrid;
+	private SectionStack dataviewSectionStack;
 	private Menu companyListMenu;  
-	private CompanyDetailViewer companyDetailTabPane;  
-	private CompanySearchForm searchForm;
-	private CompanyCategoryTreeGrid categoryTree;
-	
-	private SectionStackSection findSection;
+	private VLayout searchFormSlot, companyTileGridSlot, companyDetailTabSetSlot;
 	
 	@Inject
 	public CompanyDataView() {
-		GWT.log("init CompanyDataView()...");
+		GWT.log("initialise CompanyDataView()...");
 		
 		// initialise main container
 		widget = new VLayout();
 		
 		// initialise dataview
-		dataview = new SectionStack();
-		dataview.setVisibilityMode(VisibilityMode.MULTIPLE);
-		dataview.setAnimateSections(true);
+		dataviewSectionStack = new SectionStack();
+		dataviewSectionStack.setVisibilityMode(VisibilityMode.MULTIPLE);
+		dataviewSectionStack.setAnimateSections(true);
 		
-		// initialise CompanyCategoryGridTree
-		categoryTree = CompanyCategoryTreeGrid.getInstance();
-		
-		// set up Search form
-      	searchForm = new CompanySearchForm();
-      	searchForm.setHeight(60);
-      	
       	// set up context menu
       	setupContextMenu();
       	
-      	// initialise Company TileList
-      	companyTileGrid = new CompanyTileGrid();
-      	
-      	// initialise detail viewer
-      	companyDetailTabPane = new CompanyDetailViewer(companyTileGrid);
-      	
-      	// Set up dataview section stack
-        findSection = new SectionStackSection("Find Company");  
-        findSection.setItems(searchForm);  
-        findSection.setExpanded(true);  
-        SectionStackSection companyListSection = new SectionStackSection("Company List");  
-        companyListSection.setItems(companyTileGrid);
+      	// Set up dataview section stack section - search form section
+      	SectionStackSection findSection = new SectionStackSection("Find Company");
+      	searchFormSlot = new VLayout();
+      	searchFormSlot.setHeight(20);
+      	findSection.setItems(searchFormSlot);
+      	findSection.setExpanded(true);  
         
+      	// Set up dataview section stack section - CompanyTileGrid section
+        SectionStackSection companyListSection = new SectionStackSection("Company List");  
+        companyTileGridSlot = new VLayout();
+        companyListSection.setItems(companyTileGridSlot);
         companyListSection.setExpanded(true);  
   
-        SectionStackSection companyDetailsSection = new SectionStackSection("Company Details");  
-        companyDetailsSection.setItems(companyDetailTabPane);  
+        // Set up dataview section stack section - CompanyDetailTabset section
+        SectionStackSection companyDetailsSection = new SectionStackSection("Company Details");
+        companyDetailTabSetSlot = new VLayout();
+        companyDetailsSection.setItems(companyDetailTabSetSlot);
         companyDetailsSection.setExpanded(true);  
 	    
-        dataview.setSections(findSection, companyListSection, companyDetailsSection);
+        dataviewSectionStack.setSections(findSection, companyListSection, companyDetailsSection);
         
         // add the List Grid to the CompanyData View layout container
-        widget.addMember(dataview);
+        widget.addMember(dataviewSectionStack);
 	}
 	
 	private void setupContextMenu() {  
@@ -85,13 +72,8 @@ public class CompanyDataView extends ViewImpl implements
 	}
 	
 	@Override
-	public SectionStack getDataview() {
-		return dataview;
-	}
-	
-	@Override
-	public CompanyTileGrid getCompanyTileGrid() {
-		return companyTileGrid;
+	public SectionStack getDataviewSectionStack() {
+		return dataviewSectionStack;
 	}
 	
 	@Override
@@ -100,18 +82,23 @@ public class CompanyDataView extends ViewImpl implements
 	}
 	
 	@Override
-	public CompanyDetailViewer getCompanyDetailTabPane() {
-		return companyDetailTabPane;
+	public void setInSlot(Object slot, Widget content) {
+		GWT.log("CompanyDataView.setInSlot()...", null);
+		
+		if (slot == CompanyDataPresenter.TYPE_RevealCompanySearchForm) {
+			if (content != null) {
+				searchFormSlot.addMember(content);
+			}
+		} else if (slot == CompanyDataPresenter.TYPE_RevealCompanyTileGrid) {
+			if (content != null) {
+				companyTileGridSlot.addMember(content);
+			}
+		} else if (slot == CompanyDataPresenter.TYPE_RevealCompanyDetailTabSet) {
+			if (content != null) {
+				companyDetailTabSetSlot.addMember(content);
+			}
+		} else {
+			super.setInSlot(slot, content);
+		}
 	}
-	
-	@Override
-	public CompanySearchForm getSearchForm() {
-		return searchForm;
-	}
-	
-	@Override
-	public CompanyCategoryTreeGrid getCategoryTree() {
-		return categoryTree;
-	}
-
 }

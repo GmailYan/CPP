@@ -30,14 +30,16 @@ public class StudentPagePresenter extends
 		Presenter<StudentPagePresenter.MyView, StudentPagePresenter.MyProxy> {
 	
 	private final PlaceManager placeManager;
+	private final CompanyCategoryWidgetPresenter companyCategory; 
+	
+	public static final Object TYPE_RevealCompanyCategory = new Object(); 
 	
 	public interface MyView extends View {
 		public NavigationPane getNavigationPane();
 
-		CompanyCategoryTreeGrid getCompanyCategoryTreeGrid();
-
 		EventCategoryTreeGrid getEventCategoryTreeGrid();
 	}
+	
 	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_SetContextAreaContent = new Type<RevealContentHandler<?>>();
@@ -50,9 +52,11 @@ public class StudentPagePresenter extends
 
 	@Inject
 	public StudentPagePresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy, final PlaceManager placeManager) {
+			final MyProxy proxy, final PlaceManager placeManager,
+			final CompanyCategoryWidgetPresenter companyCategory) {
 		super(eventBus, view, proxy);
 		this.placeManager = placeManager;
+		this.companyCategory = companyCategory;
 	}
 
 	@Override
@@ -78,6 +82,8 @@ public class StudentPagePresenter extends
 	protected void onReveal() {
 		super.onReveal();
 		getView().getNavigationPane().expandSection(0);
+		
+		setInSlot(TYPE_RevealCompanyCategory, companyCategory);
 		
 		PlaceRequest myRequset = new PlaceRequest(NameTokens.companydata);
 		placeManager.revealPlace(myRequset);

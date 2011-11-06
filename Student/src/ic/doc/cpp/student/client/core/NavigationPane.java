@@ -34,7 +34,7 @@ public class NavigationPane extends VLayout {
 		 // add the Section Stack to the Navigation Pane layout container
 		 this.addMember(navigationSectionStack); 
 	 }
-	  
+	 
 	 public void addListgridSection(String sectionName, ListgridSectionStackSectionRecord[] sectionData) {
 		 navigationSectionStack.addSection(new ListgridSectionStackSection(sectionName, sectionData));
 	 } 
