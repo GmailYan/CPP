@@ -1,10 +1,5 @@
 package ic.doc.cpp.student.server.handler;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -26,56 +21,6 @@ public class RetrieveCompanyCategoryActionHandler implements
 	public RetrieveCompanyCategoryActionHandler() {
 	}
 	
-   public RetrieveCompanyCategoryResult get()
-    {
-        String loginUser = "postgres";
-        String loginPasswd = "dzziqbaby";
-        String loginUrl = "jdbc:postgresql://localhost/postgres";
-        Connection dbcon = null;
-        
-        // Load the PostgreSQL driver
-        try 
-        {
-        	Class.forName("org.postgresql.Driver");
-        	dbcon = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
-        }
-        catch (ClassNotFoundException ex)
-        {
-            System.err.println("ClassNotFoundException: " + ex.getMessage());
-            return null;
-        } catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-        
-        try
-        {
-	        // Declare our statement
-	        Statement statement = dbcon.createStatement();
-	
-	        String query = "SELECT * FROM company_category";
-	
-	        // Perform the query
-	        ResultSet rs = statement.executeQuery(query);
-	        List<CompanyCategoryDto> companyCategoryDtos = new ArrayList<CompanyCategoryDto>();
-	        // Iterate through each row of rs
-	        while (rs.next())
-	        {
-	           Long id = rs.getLong("category_id");
-	           String name = rs.getString("category_name");
-	           Long p_id = rs.getLong("parent_id");
-	           companyCategoryDtos.add(new CompanyCategoryDto(id, name, p_id));
-	        }
-	
-	        return new RetrieveCompanyCategoryResult(companyCategoryDtos);
-        }
-        catch(Exception ex)
-        {	
-            return null;
-        }
-        
-    }
-
 	@Override
 	public RetrieveCompanyCategoryResult execute(RetrieveCompanyCategory action,
 			ExecutionContext context) throws ActionException {

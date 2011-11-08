@@ -31,7 +31,6 @@ private long startTimeMillis;
 	@Test
 	public void testEventCategoryDao() {
 		try {
-			
 			createEventCategory();
 			updateEventCategory();
 			deleteEventCategory();
@@ -59,7 +58,7 @@ private long startTimeMillis;
 		EventCategoryDao categoryDao = new EventCategoryDao();
 	    
 		EventCategory category = categoryDao.retrieveEventCategory(1L);
-		category.setCategoryName("Internship");
+		category.setCategoryName("All/Internship");
 	    categoryDao.updateEventCategory(category);
 	    
 	    List<EventCategory> categorys = categoryDao.retrieveEventCategorys();
@@ -71,39 +70,39 @@ private long startTimeMillis;
 
 	private void createEventCategory() {
 	    
-		EventCategoryDao accountDao = new EventCategoryDao();
+		EventCategoryDao categoryDao = new EventCategoryDao();
 
 		EventCategory category2 = new EventCategory();
-	    category2.setCategoryName("Internshi");
+	    category2.setCategoryName("All/Internshi");
 	    category2.setParentId(0L);
-	    accountDao.createEventCategory(category2);
+	    Long category2Id = categoryDao.createEventCategory(category2);
 	    
 	    EventCategory category3 = new EventCategory();
-	    category3.setCategoryName("Summer Internship");
-	    category3.setParentId(category2.getCategoryId());
-	    accountDao.createEventCategory(category3);
+	    category3.setCategoryName("All/Internship/Summer Internship");
+	    category3.setParentId(category2Id);
+	    categoryDao.createEventCategory(category3);
 	    
 	    EventCategory category4 = new EventCategory();
-	    category4.setCategoryName("Spring Internship");
-	    category4.setParentId(category2.getCategoryId());
-	    accountDao.createEventCategory(category4);
+	    category4.setCategoryName("All/Internship/Spring Internship");
+	    category4.setParentId(category2Id);
+	    categoryDao.createEventCategory(category4);
 	    
 	    EventCategory category5 = new EventCategory();
-	    category5.setCategoryName("Presentation");
+	    category5.setCategoryName("All/Presentation");
 	    category5.setParentId(0L);
-	    accountDao.createEventCategory(category5);
+	    categoryDao.createEventCategory(category5);
 
 	    EventCategory category6 = new EventCategory();
-	    category6.setCategoryName("Career Fair");
+	    category6.setCategoryName("All/Career Fair");
 	    category6.setParentId(0L);
-	    accountDao.createEventCategory(category6);
+	    categoryDao.createEventCategory(category6);
 	    
 	    EventCategory category7 = new EventCategory();
-	    category5.setCategoryName("Test");
-	    category5.setParentId(0L);
-	    accountDao.createEventCategory(category7);
+	    category7.setCategoryName("Test");
+	    category7.setParentId(0L);
+	    categoryDao.createEventCategory(category7);
 
-	    List<EventCategory> categorys = accountDao.retrieveEventCategorys();
+	    List<EventCategory> categorys = categoryDao.retrieveEventCategorys();
 	    
 	    for (EventCategory categroy : categorys) {
 	      Log.debug(categroy.toString());

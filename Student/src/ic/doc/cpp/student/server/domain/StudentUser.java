@@ -5,33 +5,37 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "student_user")
 public class StudentUser {
 	@Id
-	@Column(name = "login", length = 32)
+	@Column(name = "login", length = 64)
 	protected String login;
 
-	@Column(name = "salt", length = 32)
+	@Column(name = "salt", length = 64)
 	protected String salt;
 
-	@Column(name = "password", length = 32)
+	@Column(name = "password", length = 64)
 	protected String password;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "student_user_companys",
 		joinColumns = {@JoinColumn(name = "login")},
 		inverseJoinColumns = {@JoinColumn(name = "company_id")})
 	protected List<Company> companys;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "student_user_events",
 		joinColumns = {@JoinColumn(name = "login")},
 		inverseJoinColumns = {@JoinColumn(name = "event_id")})
@@ -101,33 +105,6 @@ public class StudentUser {
 	public boolean isEnabled() {
 		return true;
 	}
-	
-//	public String getInterestedCompany() {
-//
-//		if (companys == null || (companys.size() == 0)) {
-//			return "No Address details";
-//		}
-//
-//	    StringBuilder sb = new StringBuilder();
-//	    String companysElement;
-//
-//	    Iterator<Company> it = companys.iterator();
-//	    Company company = it.next();
-//
-//	    companysElement = company.getAddressLine1();
-//	    sb.append(companysElement).append(", ");
-//	    companysElement = company.getAddressLine2();
-//	    sb.append(companysElement).append(" ");
-//	    companysElement = company.getCity();
-//	    sb.append(companysElement).append(" ");
-//	    companysElement = company.getState();
-//	    sb.append(companysElement).append(" ");
-//	    companysElement = company.getPostalCode();
-//	    sb.append(companysElement);
-//
-//	    // e.g. "Level 111, 111 Kent Street Sydney NSW 2000"
-//	    return sb.toString();
-//	  }
 	
 	@Override
 	public String toString() {

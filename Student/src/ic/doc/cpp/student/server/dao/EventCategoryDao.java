@@ -37,7 +37,7 @@ public class EventCategoryDao extends BaseDao {
 		EventCategory eventCategory = null;
 
 		try {
-			TypedQuery<EventCategory> query = em.createQuery("select a from EventCategory a where a.categoryId = ?1", EventCategory.class);
+			TypedQuery<EventCategory> query = em.createQuery("select a from EventCategory a where a.id = ?1", EventCategory.class);
 			query.setParameter(1, categoryId);
 			eventCategory = query.getSingleResult();
 		} finally {

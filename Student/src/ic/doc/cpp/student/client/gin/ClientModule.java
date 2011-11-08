@@ -1,7 +1,15 @@
 package ic.doc.cpp.student.client.gin;
 
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.inject.Singleton;
+import com.gwtplatform.dispatch.shared.SecurityCookie;
+import com.gwtplatform.mvp.client.RootPresenter;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
-import com.gwtplatform.mvp.client.gin.DefaultModule;
+import com.gwtplatform.mvp.client.proxy.ParameterTokenFormatter;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.TokenFormatter;
+
 import ic.doc.cpp.student.client.place.ClientPlaceManager;
 import ic.doc.cpp.student.client.core.StudentPagePresenter;
 import ic.doc.cpp.student.client.core.StudentPageView;
@@ -15,8 +23,6 @@ import ic.doc.cpp.student.client.core.eventdata.EventDataPresenter;
 import ic.doc.cpp.student.client.core.eventdata.EventDataView;
 import ic.doc.cpp.student.client.login.SignInPagePresenter;
 import ic.doc.cpp.student.client.login.SignInPageView;
-import ic.doc.cpp.student.client.login.ErrorDialogPopupPresenter;
-import ic.doc.cpp.student.client.login.ErrorDialogPopupView;
 import ic.doc.cpp.student.client.core.companydata.CompanySearchFormWidgetPresenter;
 import ic.doc.cpp.student.client.core.companydata.CompanySearchFormWidgetView;
 import ic.doc.cpp.student.client.core.companydata.CompanyTileGridWidgetPresenter;
@@ -31,19 +37,29 @@ import ic.doc.cpp.student.client.core.eventdata.EvetnDetailTabsetWidgetPresenter
 import ic.doc.cpp.student.client.core.eventdata.EvetnDetailTabsetWidgetView;
 import ic.doc.cpp.student.client.core.CompanyCategoryWidgetPresenter;
 import ic.doc.cpp.student.client.core.CompanyCategoryWidgetView;
+import ic.doc.cpp.student.shared.SharedTokens;
 
 public class ClientModule extends AbstractPresenterModule {
 
 	@Override
 	protected void configure() {
-		install(new DefaultModule(ClientPlaceManager.class));
 		
-		bindPresenter(StudentPagePresenter.class,
+		// Protect against XSRF attacks - securityCookieName = "JSESSIONID";
+	    bindConstant().annotatedWith(SecurityCookie.class).to(SharedTokens.securityCookieName);
+	    
+	    bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
+	    bind(TokenFormatter.class).to(ParameterTokenFormatter.class).in(Singleton.class);
+	    bind(RootPresenter.class).asEagerSingleton();
+	    bind(PlaceManager.class).to(ClientPlaceManager.class).in(Singleton.class);
+		
+	    // set default page
+	    bindConstant().annotatedWith(DefaultPlace.class).to(
+	    		NameTokens.signin);
+
+	    bindPresenter(StudentPagePresenter.class,
 				StudentPagePresenter.MyView.class, StudentPageView.class,
 				StudentPagePresenter.MyProxy.class);
 
-		bindConstant().annotatedWith(DefaultPlace.class).to(
-				NameTokens.studentpage);
 
 		bindPresenter(CalendarPresenter.class, CalendarPresenter.MyView.class,
 				CalendarView.class, CalendarPresenter.MyProxy.class);
@@ -61,10 +77,6 @@ public class ClientModule extends AbstractPresenterModule {
 				SignInPagePresenter.MyView.class, SignInPageView.class,
 				SignInPagePresenter.MyProxy.class);
 
-
-		bindPresenterWidget(ErrorDialogPopupPresenter.class,
-				ErrorDialogPopupPresenter.MyView.class,
-				ErrorDialogPopupView.class);
 
 		bindSingletonPresenterWidget(CompanySearchFormWidgetPresenter.class,
 				CompanySearchFormWidgetPresenter.MyView.class,

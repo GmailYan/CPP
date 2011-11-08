@@ -1,35 +1,34 @@
 package ic.doc.cpp.student.client;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HasHandlers;
-import com.google.inject.Inject;
 
-public class CurrentUser implements HasHandlers {
+public class CurrentUser {
 	
-	private boolean isLoggedIn = true;
-	
-	private final EventBus eventBus;
-	
-	@Inject
-	public CurrentUser(EventBus eventBus) {
-		this.eventBus = eventBus;
+	private String login;
+	  
+	private boolean loggedIn = true;
+	private boolean administrator;
+  
+	public CurrentUser(String login) {
+		this.login = login;
 	}
-	
-	
-	@Override
-	public void fireEvent(GwtEvent<?> event) {
-		eventBus.fireEvent(event);
+	  
+	public String getLogin() {
+		return login;    
 	}
-
 
 	public boolean isLoggedIn() {
-		return isLoggedIn;
+		return loggedIn;
 	}
 
-
-	public void setLoggedIn(boolean isLoggedIn) {
-		this.isLoggedIn = isLoggedIn;
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
 	}
 
+	public boolean isAdministrator() {
+		return administrator;
+	}
+
+	public void setAdministrator(boolean administrator) {
+		this.administrator = administrator;
+	}
 }

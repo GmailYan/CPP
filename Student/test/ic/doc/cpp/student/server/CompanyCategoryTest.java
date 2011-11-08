@@ -61,7 +61,7 @@ public class CompanyCategoryTest {
 	    
 		CompanyCategory category1 = companyCategoryDao.retrieveCompanyCategory(1L);
 	    Log.debug("accountDao.retrieveAccount(1L) - " + category1.toString());
-	    category1.setCategoryName("Banking");
+	    category1.setCategoryName("All/Banking");
 	    
 	    CompanyCategory category2 = companyCategoryDao.updateCompanyCategory(category1);
 	    Log.debug("accountDao.updateAccount(company1) - " + category2.toString());
@@ -76,54 +76,54 @@ public class CompanyCategoryTest {
 	private void createCompanyCategory() {
 		Log.debug("createCompanyCategory()");
 	    
-		CompanyCategoryDao accountDao = new CompanyCategoryDao();
+		CompanyCategoryDao companyCategoryDao = new CompanyCategoryDao();
 
 	    CompanyCategory category2 = new CompanyCategory();
-	    category2.setCategoryName("Bankin");
+	    category2.setCategoryName("All/Bankin");
 	    category2.setParentId(0L);
-	    accountDao.createCompanyCategory(category2);
+	    companyCategoryDao.createCompanyCategory(category2);
 	    
 	    CompanyCategory category3 = new CompanyCategory();
-	    category3.setCategoryName("Retail Banking");
+	    category3.setCategoryName("All/Banking/Retail Banking");
 	    category3.setParentId(category2.getCategoryId());
-	    accountDao.createCompanyCategory(category3);
+	    companyCategoryDao.createCompanyCategory(category3);
 	    
 	    CompanyCategory category4 = new CompanyCategory();
-	    category4.setCategoryName("Investment Banking");
+	    category4.setCategoryName("All/Banking/Investment Banking");
 	    category4.setParentId(category2.getCategoryId());
-	    accountDao.createCompanyCategory(category4);
+	    companyCategoryDao.createCompanyCategory(category4);
 	    
 	    CompanyCategory category5 = new CompanyCategory();
-	    category5.setCategoryName("IT");
+	    category5.setCategoryName("All/IT");
 	    category5.setParentId(0L);
-	    accountDao.createCompanyCategory(category5);
+	    companyCategoryDao.createCompanyCategory(category5);
 	    
 	    CompanyCategory category6 = new CompanyCategory();
-	    category6.setCategoryName("Software");
+	    category6.setCategoryName("All/IT/Software");
 	    category6.setParentId(category5.getCategoryId());
-	    accountDao.createCompanyCategory(category6);
+	    companyCategoryDao.createCompanyCategory(category6);
 	    
 	    CompanyCategory category7 = new CompanyCategory();
-	    category7.setCategoryName("Web Service");
+	    category7.setCategoryName("All/IT/sofware/Web Service");
 	    category7.setParentId(category6.getCategoryId());
-	    accountDao.createCompanyCategory(category7);
+	    companyCategoryDao.createCompanyCategory(category7);
 	    
 	    CompanyCategory category8 = new CompanyCategory();
-	    category8.setCategoryName("Operating System");
+	    category8.setCategoryName("All/IT/Software/Operating System");
 	    category8.setParentId(category6.getCategoryId());
-	    accountDao.createCompanyCategory(category8);
+	    companyCategoryDao.createCompanyCategory(category8);
 	    
 	    CompanyCategory category9 = new CompanyCategory();
-	    category9.setCategoryName("Hardware");
+	    category9.setCategoryName("All/IT/Hardware");
 	    category9.setParentId(category5.getCategoryId());
-	    accountDao.createCompanyCategory(category9);
+	    companyCategoryDao.createCompanyCategory(category9);
 
 	    CompanyCategory category10 = new CompanyCategory();
 	    category10.setCategoryName("Test deleting");
 	    category10.setParentId(0L);
-	    accountDao.createCompanyCategory(category10);
+	    companyCategoryDao.createCompanyCategory(category10);
 	    
-	    List<CompanyCategory> categorys = accountDao.retrieveCompanyCategorys();
+	    List<CompanyCategory> categorys = companyCategoryDao.retrieveCompanyCategorys();
 	    
 	    for (CompanyCategory categroy : categorys) {
 	      Log.debug(categroy.toString());

@@ -4,6 +4,9 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+
+import ic.doc.cpp.student.client.LoggedInGatekeeper;
 import ic.doc.cpp.student.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.inject.Inject;
@@ -47,6 +50,7 @@ public class CompanyDataPresenter extends
 	
 	@ProxyCodeSplit
 	@NameToken(NameTokens.companydata)
+	@UseGatekeeper(LoggedInGatekeeper.class)
 	public interface MyProxy extends ProxyPlace<CompanyDataPresenter> {
 	}
 

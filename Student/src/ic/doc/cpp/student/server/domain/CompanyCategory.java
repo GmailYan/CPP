@@ -1,5 +1,6 @@
 package ic.doc.cpp.student.server.domain;
 
+
 import ic.doc.cpp.student.shared.dto.CompanyCategoryDto;
 
 import javax.persistence.Column;
@@ -18,10 +19,10 @@ public class CompanyCategory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long categoryId;
 	
-	@Column(name = "category_name", length = 100)
+	@Column(name = "category_name", length = 100, nullable = false)
 	protected String categoryName;
 	
-	@Column(name = "parent_id")
+	@Column(name = "parent_id", nullable = false)
 	protected Long parentId;
 	
 	public CompanyCategory() {}
@@ -31,17 +32,12 @@ public class CompanyCategory {
 	}
 	
 	public CompanyCategory(CompanyCategoryDto companyCategory) {
-		setCategoryId(companyCategory.getCategoryId());
 		setCategoryName(companyCategory.getCategoryName());
 		setParentId(companyCategory.getParentId());
 	}
 
 	public Long getCategoryId() {
 		return categoryId;
-	}
-
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
 	}
 
 	public String getCategoryName() {

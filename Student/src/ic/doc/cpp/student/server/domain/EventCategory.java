@@ -17,10 +17,10 @@ public class EventCategory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long categoryId;
 	
-	@Column(name = "category_name", length = 100)
+	@Column(name = "category_name", length = 100, nullable = false)
 	protected String categoryName;
 	
-	@Column(name = "parent_id")
+	@Column(name = "parent_id", nullable = false)
 	protected Long parentId;
 	
 	public EventCategory() {}
@@ -30,17 +30,12 @@ public class EventCategory {
 	}
 	
 	public EventCategory(EventCategoryDto eventCategory) {
-		setCategoryId(eventCategory.getCategoryId());
 		setCategoryName(eventCategory.getCategoryName());
 		setParentId(eventCategory.getParentId());
 	}
 
 	public Long getCategoryId() {
 		return categoryId;
-	}
-
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
 	}
 
 	public String getCategoryName() {

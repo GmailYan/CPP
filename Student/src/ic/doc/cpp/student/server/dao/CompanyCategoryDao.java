@@ -29,7 +29,7 @@ public class CompanyCategoryDao extends BaseDao{
 		}
 		
 		return categoryId;
-			  
+		
 	}
 	
 	public CompanyCategory retrieveCompanyCategory(Long categoryId) {
@@ -37,7 +37,7 @@ public class CompanyCategoryDao extends BaseDao{
 		CompanyCategory companyCategory = null;
 
 		try {
-			TypedQuery<CompanyCategory> query = em.createQuery("select a from CompanyCategory a where a.categoryId = ?1", CompanyCategory.class);
+			TypedQuery<CompanyCategory> query = em.createQuery("select a from CompanyCategory a where a.id = ?1", CompanyCategory.class);
 			query.setParameter(1, categoryId);
 			companyCategory = query.getSingleResult();
 		} finally {

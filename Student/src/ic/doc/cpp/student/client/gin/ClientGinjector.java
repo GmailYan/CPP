@@ -9,6 +9,8 @@ import com.google.gwt.inject.client.Ginjector;
 import com.google.gwt.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.google.gwt.inject.client.AsyncProvider;
+import com.google.inject.Provider;
+
 import ic.doc.cpp.student.client.core.StudentPagePresenter;
 import ic.doc.cpp.student.client.core.calendar.CalendarPresenter;
 import ic.doc.cpp.student.client.core.companydata.CompanyDataPresenter;
@@ -30,7 +32,7 @@ public interface ClientGinjector extends Ginjector {
 
 	AsyncProvider<EventDataPresenter> getEventDataPresenter();
 
-	AsyncProvider<SignInPagePresenter> getSignInPagePresenter();
+	Provider<SignInPagePresenter> getSignInPagePresenter();
 	
 	LoggedInGatekeeper getLoggedInGatekeeper();
 

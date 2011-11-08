@@ -1,5 +1,8 @@
 package ic.doc.cpp.student.server.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 @Entity
@@ -18,15 +25,16 @@ public class Company {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long companyId;
 	
-	@Column(name = "name", length = 200)
+	@Column(name = "name", length = 200, nullable = false)
 	protected String name;
 	
-	@Column(name = "category_id")
-	protected Long categoryId;
-	
     @ManyToOne(optional = false)
-    @JoinColumn(name = "category_id", referencedColumnName="category_id")
+    @JoinColumn(name = "category_id")
     protected CompanyCategory category;
+    
+    @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
+	@LazyCollection(LazyCollectionOption.FALSE)
+    protected List<Event> events;
     
 	@Column(name = "description", length = 500)
 	protected String description;
@@ -47,10 +55,6 @@ public class Company {
 		return companyId;
 	}
 
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -59,13 +63,6 @@ public class Company {
 		this.name = name;
 	}
 
-	public Long getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
-	}
 
 	public CompanyCategory getCategory() {
 		return category;
@@ -107,6 +104,53 @@ public class Company {
 		sb.append("Category: ").append(category.categoryName).append(", ");
 
 		return sb.toString();
+	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + companyId.hashCode();
+		result = prime * result + name.hashCode();
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Company))
+			return false;
+		Company other = (Company) obj;
+
+		if (companyId == null) {
+    		if (other.companyId != null)
+    			return false;
+    	} else if (!companyId.equals(other.companyId)) {
+    		return false;
+    	}
+    	
+    	if (name == null) {
+    		if (other.name != null)
+	    			return false;
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+	    
+    	if (category == null) {
+	    	if (other.category != null)
+	    		return false;
+	    } else if (!category.equals(other.category)) {
+	    	return false;
+	    }
+	    
+	    return true;
 	}
 	
 }
