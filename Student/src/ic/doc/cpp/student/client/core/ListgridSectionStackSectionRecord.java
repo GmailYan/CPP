@@ -6,15 +6,15 @@ import com.smartgwt.client.widgets.grid.events.CellDoubleClickHandler;
 public class ListgridSectionStackSectionRecord extends ListGridRecord {
 	 public ListgridSectionStackSectionRecord() {}
 		
-	  public ListgridSectionStackSectionRecord(String icon, String name,
+	  public ListgridSectionStackSectionRecord(String place, String name,
 			  					  CellDoubleClickHandler clickHandler) {
-	    setIcon(icon);
+	    setPlace(place);
 		setName(name);
 		setDoubleClickHandler(clickHandler);
 	  }	
 		    
-	  public void setIcon(String appIcon) {
-	    setAttribute("icon", appIcon);
+	  public void setPlace(String place) {
+	    setAttribute("place", place);
 	  }       
 		    
 	  public void setName(String appName) {
@@ -25,8 +25,8 @@ public class ListgridSectionStackSectionRecord extends ListGridRecord {
 		setAttribute("clickHandler", clickHandler);
 	  }    
 
-	  public String getIcon() {
-	    return getAttributeAsString("icon");
+	  public String getPlace() {
+	    return getAttributeAsString("place");
 	  }    
 
 	  public String getName() {

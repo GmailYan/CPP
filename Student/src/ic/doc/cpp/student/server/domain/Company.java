@@ -152,5 +152,9 @@ public class Company {
 	    
 	    return true;
 	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
 	
 }

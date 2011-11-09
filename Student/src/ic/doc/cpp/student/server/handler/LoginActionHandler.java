@@ -10,7 +10,6 @@ import ic.doc.cpp.student.shared.action.LoginResult;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import com.google.inject.Provider;
@@ -20,8 +19,7 @@ public class LoginActionHandler implements ActionHandler<Login, LoginResult> {
 	private final Provider<HttpServletRequest> requestProvider;
 	
 	@Inject
-	public LoginActionHandler(final ServletContext servletContext,
-		      final Provider<HttpServletRequest> requestProvider) {
+	public LoginActionHandler(final Provider<HttpServletRequest> requestProvider) {
 	    this.requestProvider = requestProvider;
 	  }
 

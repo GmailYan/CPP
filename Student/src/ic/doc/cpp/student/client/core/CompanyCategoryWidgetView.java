@@ -48,15 +48,17 @@ public class CompanyCategoryWidgetView extends ViewImpl implements
 	    tree.setIdField("categoryId");
 	    tree.setParentIdField("parentId");
 	    
-	    TreeNode root = new CompanyCategoryTreeNode(0L, "All", null);
+	    TreeNode root = new CompanyCategoryTreeNode(0L, "All", "All", null);
 	    
 	    TreeNode[] nodes = new TreeNode[list.size() + 1];
 	    nodes[list.size()] = root;
 	    
 		for (int i = 0; i < list.size(); i++) {
 			CompanyCategoryDto companyCategoryDto = list.get(i);
+			String name = companyCategoryDto.getCategoryName();
+			String display = name.substring(name.lastIndexOf("/") + 1);
 			nodes[i] = new CompanyCategoryTreeNode(companyCategoryDto.getCategoryId(),
-					companyCategoryDto.getCategoryName(), companyCategoryDto.getParentId());
+					display, name, companyCategoryDto.getParentId());
 		}
 
 		tree.setData(nodes);

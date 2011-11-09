@@ -136,7 +136,7 @@ public class CompanyDataPresenter extends
         ListGridRecord selectedCategory = companyCategory.getView().getSelectedRecord();
 
         if (useCategoryTreeValue.equals("true") && selectedCategory != null) {
-        	categoryName = selectedCategory.getAttribute("categoryName");  
+        	categoryName = selectedCategory.getAttribute("categoryActuralName");  
             findValues = searchForm.getView().getValuesAsCriteria();
             findValues.addCriteria("category", categoryName);  
         } else if (!useCategoryTreeValue.equals("true") && selectedCategory != null) {

@@ -3,10 +3,13 @@ package ic.doc.cpp.student.client.place;
 public class NameTokens {
 
 	public static final String studentpage = "studentpage";
-	public static final String calendar = "Calendar";
+	public static final String calendar = "calendar";
 	public static final String companydata = "companydata";
 	public static final String eventdata = "eventdata";
 	public static final String signin = "signin";
+	public static final String profile = "profile";
+	public static final String errorpage = "errorpage";
+	public static final String automatch = "automatch";
 
 	public static String getStudentpage() {
 		return studentpage;
@@ -26,6 +29,18 @@ public class NameTokens {
 
 	public static String getSignin() {
 		return signin;
+	}
+
+	public static String getProfile() {
+		return profile;
+	}
+
+	public static String getErrorpage() {
+		return errorpage;
+	}
+
+	public static String getAutomatch() {
+		return automatch;
 	}
 
 }

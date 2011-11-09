@@ -1,24 +1,46 @@
 package ic.doc.cpp.student.shared.dto;
 
-import ic.doc.cpp.student.server.domain.Company;
-import ic.doc.cpp.student.server.domain.EventCategory;
-
 import java.io.Serializable;
 import java.sql.Date;
 
 public class EventDto implements Serializable{
 	
-	private static final long serialVersionUID = -3434148714982575460L;
+	private static final long serialVersionUID = 6072601952142896135L;
 	
 	protected Long eventId;
 	protected String title;
-	protected EventCategory category;
-	protected Company company;
+	protected Long categoryId;
+	protected Long companyId;
 	protected String description;
 	protected String website;
 	protected Date start_date;
 	protected Date end_date;
 	protected String picture;
+	
+	public EventDto() {}
+
+	public EventDto(Long eventId, String title, Long categoryId,
+			Long companyId, String description, String website,
+			Date start_date, Date end_date, String picture) {
+		super();
+		this.eventId = eventId;
+		this.title = title;
+		this.categoryId = categoryId;
+		this.companyId = companyId;
+		this.description = description;
+		this.website = website;
+		this.start_date = start_date;
+		this.end_date = end_date;
+		this.picture = picture;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
 
 	public Long getEventId() {
 		return eventId;
@@ -34,22 +56,6 @@ public class EventDto implements Serializable{
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public EventCategory getCategory() {
-		return category;
-	}
-
-	public void setCategory(EventCategory category) {
-		this.category = category;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
 	}
 
 	public String getDescription() {
@@ -68,6 +74,18 @@ public class EventDto implements Serializable{
 		this.website = website;
 	}
 
+	public String getPicture() {
+		return picture;
+	}
+	
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+
 	public Date getStart_date() {
 		return start_date;
 	}
@@ -84,10 +102,6 @@ public class EventDto implements Serializable{
 		this.end_date = end_date;
 	}
 
-	public String getPicture() {
-		return picture;
-	}
-
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
@@ -97,9 +111,8 @@ public class EventDto implements Serializable{
 		StringBuilder sb = new StringBuilder();
 		sb.append("Id: ").append(eventId).append(", ");
 		sb.append("Title: ").append(title).append(", ");
-		sb.append("Category: ").append(category.getCategoryName()).append(";");
-		sb.append("Company: ").append(company.toString()).append(";");
-
+		sb.append("Category: ").append(categoryId).append(";");
+		sb.append("Company: ").append(companyId.toString()).append(";");
 		return sb.toString();
 	}
 	
@@ -136,14 +149,14 @@ public class EventDto implements Serializable{
 			return false;
 		}
 	    
-    	if (category == null) {
-	    	if (other.category != null)
+    	if (categoryId == null) {
+	    	if (other.categoryId != null)
 	    		return false;
-	    } else if (!category.equals(other.category)) {
+	    } else if (!categoryId.equals(other.categoryId)) {
 	    	return false;
 	    }
 	    
 	    return true;
 	}
-	
+
 }

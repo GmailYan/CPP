@@ -21,11 +21,23 @@ public class StudentUser {
 	@Column(name = "login", length = 64)
 	protected String login;
 
-	@Column(name = "salt", length = 64)
+	@Column(name = "salt", length = 64, nullable = false)
 	protected String salt;
 
-	@Column(name = "password", length = 64)
+	@Column(name = "password", length = 64, nullable = false)
 	protected String password;
+	
+	@Column(name = "first_name", length = 100, nullable = false)
+	protected String firstName;
+
+	@Column(name = "last_name", length = 100, nullable = false)
+	protected String lastName;
+	
+	@Column(name = "email", length = 100, nullable = false)
+	protected String email;
+	
+	@Column(name = "gender", length = 20, nullable = false)
+	protected String gender;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -41,6 +53,12 @@ public class StudentUser {
 		inverseJoinColumns = {@JoinColumn(name = "event_id")})
 	protected List<Event> events;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "student_user_company_category",
+		joinColumns = {@JoinColumn(name = "login")},
+		inverseJoinColumns = {@JoinColumn(name = "category_id")})
+	protected List<CompanyCategory> interestedArea;
 	
 	public StudentUser() {}
 	
@@ -49,13 +67,25 @@ public class StudentUser {
 		this.salt = salt;
 		this.password = password;
 	}
+	
+	public StudentUser(String login, String salt, String password,
+			String firstName, String lastName, String email, String gender) {
+		super();
+		this.login = login;
+		this.salt = salt;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.gender = gender;
+	}
+	
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
 	public String getLogin() {
 		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
 	}
 
 	public String getSalt() {
@@ -152,5 +182,45 @@ public class StudentUser {
 	    } else if (!salt.equals(other.salt))
 	    	return false;
 	    return true;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public List<CompanyCategory> getInterestedArea() {
+		return interestedArea;
+	}
+
+	public void setInterestedArea(List<CompanyCategory> interestedArea) {
+		this.interestedArea = interestedArea;
 	}
 }

@@ -44,13 +44,11 @@ public class Event {
 	
 	@Column(name = "picture")
 	protected String picture;
-
+	
+	public Event() {}
+	
 	public Long getEventId() {
 		return eventId;
-	}
-
-	public void setEventId(Long eventId) {
-		this.eventId = eventId;
 	}
 
 	public String getTitle() {

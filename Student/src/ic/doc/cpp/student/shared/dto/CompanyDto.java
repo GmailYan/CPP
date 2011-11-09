@@ -1,8 +1,5 @@
 package ic.doc.cpp.student.shared.dto;
 
-import ic.doc.cpp.student.server.domain.CompanyCategory;
-import ic.doc.cpp.student.server.domain.Event;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,21 +9,23 @@ public class CompanyDto implements Serializable {
 			
 	protected Long companyId;
 	protected String name;
-    protected CompanyCategory category;
-    protected List<Event> events;
+    protected CompanyCategoryDto categoryDto;
+    protected List<EventDto> eventDtos;
 	protected String description;
 	protected String website;
 	protected String logo;
 	
 	public CompanyDto() {}
 	
+
 	public CompanyDto(Long companyId, String name,
-			CompanyCategory category, List<Event> events, String description,
-			String website, String logo) {
+			CompanyCategoryDto categoryDto, List<EventDto> eventDtos,
+			String description, String website, String logo) {
+		super();
 		this.companyId = companyId;
 		this.name = name;
-		this.category = category;
-		this.events = events;
+		this.categoryDto = categoryDto;
+		this.eventDtos = eventDtos;
 		this.description = description;
 		this.website = website;
 		this.logo = logo;
@@ -48,12 +47,12 @@ public class CompanyDto implements Serializable {
 		this.name = name;
 	}
 
-	public CompanyCategory getCategory() {
-		return category;
+	public CompanyCategoryDto getCategoryDto() {
+		return categoryDto;
 	}
 
-	public void setCategory(CompanyCategory category) {
-		this.category = category;
+	public void setCategoryDto(CompanyCategoryDto categoryDto) {
+		this.categoryDto = categoryDto;
 	}
 
 	public String getDescription() {
@@ -80,21 +79,32 @@ public class CompanyDto implements Serializable {
 		this.logo = logo;
 	}
 	
+	public List<EventDto> getEvents() {
+		return eventDtos;
+	}
 
-	public List<Event> getEvents() {
-		return events;
+
+	public void setEvents(List<EventDto> events) {
+		this.eventDtos = events;
 	}
-	
-	public void setEvents(List<Event> events) {
-		this.events = events;
+
+
+	public List<EventDto> getEventDtos() {
+		return eventDtos;
 	}
+
+
+	public void setEventDtos(List<EventDto> eventDtos) {
+		this.eventDtos = eventDtos;
+	}
+
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Id: ").append(companyId).append(", ");
 		sb.append("Name: ").append(name).append(", ");
-		sb.append("Category: ").append(category.getCategoryName()).append(", ");
+		sb.append("Category: ").append(categoryDto.getCategoryName()).append(", ");
 		
 		return sb.toString();
 	}
@@ -131,14 +141,16 @@ public class CompanyDto implements Serializable {
 			return false;
 		}
 	    
-    	if (category == null) {
-	    	if (other.getCategory() != null)
+    	if (categoryDto == null) {
+	    	if (other.categoryDto != null)
 	    		return false;
-	    } else if (!category.equals(other.getCategory())) {
+	    } else if (!categoryDto.equals(other.categoryDto)) {
 	    	return false;
 	    }
 	    
 	    return true;
 	}
+
+
 
 }

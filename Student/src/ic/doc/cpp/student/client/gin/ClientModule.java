@@ -14,6 +14,7 @@ import ic.doc.cpp.student.client.place.ClientPlaceManager;
 import ic.doc.cpp.student.client.core.StudentPagePresenter;
 import ic.doc.cpp.student.client.core.StudentPageView;
 import ic.doc.cpp.student.client.place.DefaultPlace;
+import ic.doc.cpp.student.client.place.ErrorPlace;
 import ic.doc.cpp.student.client.place.NameTokens;
 import ic.doc.cpp.student.client.core.calendar.CalendarPresenter;
 import ic.doc.cpp.student.client.core.calendar.CalendarView;
@@ -38,6 +39,12 @@ import ic.doc.cpp.student.client.core.eventdata.EvetnDetailTabsetWidgetView;
 import ic.doc.cpp.student.client.core.CompanyCategoryWidgetPresenter;
 import ic.doc.cpp.student.client.core.CompanyCategoryWidgetView;
 import ic.doc.cpp.student.shared.SharedTokens;
+import ic.doc.cpp.student.client.core.profile.StudentUserProfilePresenter;
+import ic.doc.cpp.student.client.core.profile.StudentUserProfileView;
+import ic.doc.cpp.student.client.errorpage.ErrorPagePresenter;
+import ic.doc.cpp.student.client.errorpage.ErrorPageView;
+import ic.doc.cpp.student.client.core.automatch.AutoMatchPresenter;
+import ic.doc.cpp.student.client.core.automatch.AutoMatchView;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -55,6 +62,11 @@ public class ClientModule extends AbstractPresenterModule {
 	    // set default page
 	    bindConstant().annotatedWith(DefaultPlace.class).to(
 	    		NameTokens.signin);
+	    
+	    // set error page
+	    bindConstant().annotatedWith(ErrorPlace.class).to(
+	    		NameTokens.errorpage);
+	    
 
 	    bindPresenter(StudentPagePresenter.class,
 				StudentPagePresenter.MyView.class, StudentPageView.class,
@@ -105,5 +117,18 @@ public class ClientModule extends AbstractPresenterModule {
 		bindSingletonPresenterWidget(CompanyCategoryWidgetPresenter.class,
 				CompanyCategoryWidgetPresenter.MyView.class,
 				CompanyCategoryWidgetView.class);
+
+		bindPresenter(StudentUserProfilePresenter.class,
+				StudentUserProfilePresenter.MyView.class,
+				StudentUserProfileView.class,
+				StudentUserProfilePresenter.MyProxy.class);
+
+		bindPresenter(ErrorPagePresenter.class,
+				ErrorPagePresenter.MyView.class, ErrorPageView.class,
+				ErrorPagePresenter.MyProxy.class);
+
+		bindPresenter(AutoMatchPresenter.class,
+				AutoMatchPresenter.MyView.class, AutoMatchView.class,
+				AutoMatchPresenter.MyProxy.class);
 	}
 }

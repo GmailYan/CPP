@@ -94,7 +94,7 @@ public class StudentPagePresenter extends
 		@Override
 		public void onRecordClick(RecordClickEvent event) {
 			Record record = event.getRecord();
-			String name = record.getAttributeAsString("name");
+			String name = record.getAttributeAsString("place");
 			GWT.log("NavigationPaneRecordClickHandler.onRecordClick() - " + name, null);
 			PlaceRequest myRequest = new PlaceRequest(name);
 			placeManager.revealPlace(myRequest);
@@ -114,6 +114,8 @@ public class StudentPagePresenter extends
 				GWT.log("NavigationPaneSecitonHeaderClickHandler.onSectionHeaderClick() - " + contextAreaName, null);
 				PlaceRequest myRequest = new PlaceRequest(contextAreaName);
 				placeManager.revealPlace(myRequest);
+			} else {
+//				placeManager.revealPlace();
 			}
 		}
 		

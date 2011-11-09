@@ -36,7 +36,7 @@ public class SignInPageView extends ViewImpl implements
 			    + "    <td colspan=\"2\">Forget your password?</td>\n"
 			    + "  </tr>\n"
 			    + "  <tr>\n"
-			    + "    <td colspan=\"2\">Contact your Serendipity administrator.</td>\n"
+			    + "    <td colspan=\"2\">Contact your CPP Administrator.</td>\n"
 			    + "  </tr>\n"    
 			    + "</table>\n"
 			    + "</div>\n";
@@ -53,7 +53,8 @@ public class SignInPageView extends ViewImpl implements
 		 passwordField = new PasswordTextBox();
 		 signInButton = new Button("Sign in");
 
-		 userNameField.setText("administrator");
+		 userNameField.setText("dzz");
+		 passwordField.setText("N0More$ecret");
 
 		 panel.add(userNameField, "userNameFieldContainer");
 		 panel.add(passwordField, "passwordFieldContainer");
