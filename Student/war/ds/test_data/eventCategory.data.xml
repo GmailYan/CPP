@@ -1,0 +1,26 @@
+<List>
+<eventCategory>
+    <categoryName>All</categoryName>
+    <parentID>root</parentID>
+</eventCategory>
+<eventCategory>
+    <categoryName>Internship</categoryName>
+    <parentID>All</parentID>
+</eventCategory>
+<eventCategory>
+    <categoryName>Summer Internship</categoryName>
+    <parentID>InternShip</parentID>
+</eventCategory>
+<eventCategory>
+    <categoryName>Spring Internship</categoryName>
+    <parentID>InternShip</parentID>
+</eventCategory>
+<eventCategory>
+    <categoryName>Presentation</categoryName>
+    <parentID>All</parentID>
+</eventCategory>
+<eventCategory>
+    <categoryName>Career Fair</categoryName>
+    <parentID>All</parentID>
+</eventCategory>
+</List>
