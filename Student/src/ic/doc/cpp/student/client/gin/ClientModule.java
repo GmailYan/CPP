@@ -45,6 +45,8 @@ import ic.doc.cpp.student.client.errorpage.ErrorPagePresenter;
 import ic.doc.cpp.student.client.errorpage.ErrorPageView;
 import ic.doc.cpp.student.client.core.automatch.AutoMatchPresenter;
 import ic.doc.cpp.student.client.core.automatch.AutoMatchView;
+import ic.doc.cpp.student.client.core.profile.InterestedCompanyWidgetPresenter;
+import ic.doc.cpp.student.client.core.profile.InterestedCompanyWidgetView;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -130,5 +132,10 @@ public class ClientModule extends AbstractPresenterModule {
 		bindPresenter(AutoMatchPresenter.class,
 				AutoMatchPresenter.MyView.class, AutoMatchView.class,
 				AutoMatchPresenter.MyProxy.class);
+
+		bindSingletonPresenterWidget(InterestedCompanyWidgetPresenter.class,
+				InterestedCompanyWidgetPresenter.MyView.class,
+				InterestedCompanyWidgetView.class);
+
 	}
 }

@@ -7,6 +7,8 @@ import ic.doc.cpp.student.server.domain.StudentUser;
 import ic.doc.cpp.student.server.util.Security;
 import ic.doc.cpp.student.shared.action.Login;
 import ic.doc.cpp.student.shared.action.LoginResult;
+import ic.doc.cpp.student.shared.exception.LoginException;
+
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -37,7 +39,7 @@ public class LoginActionHandler implements ActionHandler<Login, LoginResult> {
 				session.setAttribute("login.authenticated", action.getLogin());
 				result = new LoginResult(session.getId());
 			} else {
-				throw new ActionException("Invalid user name or password.");
+				throw new LoginException("Invalid user name or password.");
 			}
 		} catch (Exception e) {
 			throw new ActionException(e);

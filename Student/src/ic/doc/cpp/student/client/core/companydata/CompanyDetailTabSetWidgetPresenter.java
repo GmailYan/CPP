@@ -1,11 +1,17 @@
 package ic.doc.cpp.student.client.core.companydata;
 
-import ic.doc.cpp.student.client.core.data.CompanyDetailXmlDS;
-import ic.doc.cpp.student.client.core.data.EventDetailXmlDS;
+import java.util.List;
+
+import ic.doc.cpp.student.client.core.data.CompanyDetailDataSource;
+import ic.doc.cpp.student.client.core.data.CompanyEventsDetailDataSource;
+import ic.doc.cpp.student.client.core.data.CompanyTileRecord;
+import ic.doc.cpp.student.client.util.CreateRecordFromDto;
+import ic.doc.cpp.student.shared.dto.EventDto;
 
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.google.inject.Inject;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.smartgwt.client.data.Criteria;
@@ -33,6 +39,7 @@ public class CompanyDetailTabSetWidgetPresenter extends
 		void setCompanyViewerData(Record[] records);
 		void updateTab(int i, Canvas pane);
 		void eventListGridFetchData(Criteria criteria);
+		void setEventListGridData(Record[] records);
 	}
 
 
@@ -47,7 +54,8 @@ public class CompanyDetailTabSetWidgetPresenter extends
 	protected void onBind() {
 		super.onBind();
 		
-		getView().setDataSource(CompanyDetailXmlDS.getInstance(), EventDetailXmlDS.getInstance());
+		getView().setDataSource(CompanyDetailDataSource.getInstance(),
+				CompanyEventsDetailDataSource.getInstance());
 		
 		registerHandler(getView().addTabSeletedHandler(new TabSelectedHandler() {  
             public void onTabSelected(TabSelectedEvent event) {  
@@ -78,17 +86,23 @@ public class CompanyDetailTabSetWidgetPresenter extends
     }  
 	  
 	public void updateDetails() {  
-        Record selectedRecord  = companyTileGrid.getView().getSelectedRecord();  
+        CompanyTileRecord selectedRecord  = (CompanyTileRecord)companyTileGrid.getView().getSelectedRecord();  
         int selectedTab = getView().getSelectedTabNumber();  
         if (selectedTab == 0) {  
         	getView().setCompanyViewerData(new Record[]{selectedRecord});  
         } else {
         	getView().updateTab(1, getView().getEventListGrid());
 	    	if (selectedRecord != null) {
-	    		Criteria criteria = new Criteria();
-	    		criteria.addCriteria("CID", selectedRecord.getAttribute("CID"));
-	    		getView().eventListGridFetchData(criteria); 
+//	    		Criteria criteria = new Criteria();
+//	    		criteria.addCriteria("companyId", selectedRecord.getAttribute("companyId"));
+//	    		getView().eventListGridFetchData(criteria);
+	    		List<EventDto> eventDtos = selectedRecord.getEvents();
+	    		GWT.log(eventDtos.toString());
+	    		String companyName = selectedRecord.getAttribute("name");
+	    		getView().setEventListGridData(CreateRecordFromDto.createRecordsFromEventDtos(companyName, eventDtos));
 	    	}
         }  
-	}  
+	}
+
+
 }

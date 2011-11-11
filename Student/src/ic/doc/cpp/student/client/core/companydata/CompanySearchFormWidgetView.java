@@ -1,7 +1,5 @@
 package ic.doc.cpp.student.client.core.companydata;
 
-import ic.doc.cpp.student.client.core.data.CompanyDetailXmlDS;
-
 import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.inject.Inject;
 import com.google.gwt.core.client.GWT;
@@ -43,7 +41,7 @@ public class CompanySearchFormWidgetView extends ViewImpl implements
 
 	@Override
 	public void setDataSource(DataSource ds) {
-		searchForm.setDataSource(CompanyDetailXmlDS.getInstance());
+		searchForm.setDataSource(ds);
 	    
 	    findCompanyButton = new ButtonItem("Find");
 	    //findItem.setIcon("silk/find.png");

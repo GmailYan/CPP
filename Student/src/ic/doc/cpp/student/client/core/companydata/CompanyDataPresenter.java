@@ -1,5 +1,7 @@
 package ic.doc.cpp.student.client.core.companydata;
 
+
+import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -8,9 +10,13 @@ import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 
 import ic.doc.cpp.student.client.LoggedInGatekeeper;
 import ic.doc.cpp.student.client.place.NameTokens;
+
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.inject.Inject;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.util.SC;
@@ -29,10 +35,13 @@ import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
 import ic.doc.cpp.student.client.core.CompanyCategoryWidgetPresenter;
 import ic.doc.cpp.student.client.core.StudentPagePresenter;
+import ic.doc.cpp.student.shared.action.AddStudentInterestedCompany;
+import ic.doc.cpp.student.shared.action.AddStudentInterestedCompanyResult;
 
 public class CompanyDataPresenter extends
 		Presenter<CompanyDataPresenter.MyView, CompanyDataPresenter.MyProxy> {
 	
+	private final DispatchAsync dispatcher;
 	private final CompanySearchFormWidgetPresenter searchForm;
 	private final CompanyTileGridWidgetPresenter companyTileGrid;
 	private final CompanyDetailTabSetWidgetPresenter companyDetailTabset;
@@ -45,6 +54,8 @@ public class CompanyDataPresenter extends
 	public interface MyView extends View {
 		public Menu getItemListMenu();
 		SectionStack getDataviewSectionStack();
+		public HandlerRegistration addLikeMenuItemClickHandler(
+				com.smartgwt.client.widgets.menu.events.ClickHandler clickHandler);
 	}
 	
 	
@@ -56,7 +67,8 @@ public class CompanyDataPresenter extends
 
 	@Inject
 	public CompanyDataPresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy, final CompanySearchFormWidgetPresenter searchForm,
+			final MyProxy proxy, final DispatchAsync dispatcher,
+			final CompanySearchFormWidgetPresenter searchForm,
 			final CompanyTileGridWidgetPresenter companyTileGrid,
 			final CompanyDetailTabSetWidgetPresenter companyDetailTabset,
 			final CompanyCategoryWidgetPresenter companyCategory) {
@@ -65,6 +77,7 @@ public class CompanyDataPresenter extends
 		this.companyTileGrid = companyTileGrid;
 		this.companyDetailTabset = companyDetailTabset;
 		this.companyCategory = companyCategory;
+		this.dispatcher = dispatcher;
 	}
 
 	@Override
@@ -112,11 +125,25 @@ public class CompanyDataPresenter extends
 			}
 		}));
 		
-		registerHandler(getView().getItemListMenu().getItem(0).addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
+		registerHandler(getView().addLikeMenuItemClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
 			
 			@Override
 			public void onClick(MenuItemClickEvent event) {
-				SC.say("You like " + companyTileGrid.getView().getSelectedRecord().getAttribute("name"));
+				Long companyId = companyTileGrid.getSelectedCompanyId();
+				dispatcher.execute(new AddStudentInterestedCompany(companyId), 
+						new AsyncCallback<AddStudentInterestedCompanyResult>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						GWT.log("Fail on addStudentInterestedCompany() - " + caught.getLocalizedMessage());
+					}
+
+					@Override
+					public void onSuccess(
+							AddStudentInterestedCompanyResult result) {
+						SC.say(result.getMessage());
+					}
+				});
 			}
 		}));
 	}
@@ -129,19 +156,23 @@ public class CompanyDataPresenter extends
 		setInSlot(TYPE_RevealCompanyDetailTabSet, companyDetailTabset);
 	}
 	
+	@Override
+	protected void onReset() {
+		super.onReset();
+	}
+
 	public void findItems() {
         Criteria findValues = null;  
         String categoryName = "";
-        String useCategoryTreeValue = searchForm.getView().getValueAsString("findInCategory");
+        String findInCategory = searchForm.getView().getValueAsString("findInCategory");
         ListGridRecord selectedCategory = companyCategory.getView().getSelectedRecord();
 
-        if (useCategoryTreeValue.equals("true") && selectedCategory != null) {
+        if (findInCategory.equals("true") && selectedCategory != null) {
         	categoryName = selectedCategory.getAttribute("categoryActuralName");  
             findValues = searchForm.getView().getValuesAsCriteria();
             findValues.addCriteria("category", categoryName);  
-        } else if (!useCategoryTreeValue.equals("true") && selectedCategory != null) {
+        } else if (!findInCategory.equals("true")) {
         	findValues = searchForm.getView().getValuesAsCriteria();  
-            findValues.addCriteria("category", categoryName); 
         } else {
         	SC.say("Please select a category to use category!");
         }

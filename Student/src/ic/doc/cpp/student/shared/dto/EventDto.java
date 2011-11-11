@@ -155,6 +155,46 @@ public class EventDto implements Serializable{
 	    } else if (!categoryId.equals(other.categoryId)) {
 	    	return false;
 	    }
+    	if (companyId == null) {
+    		if (other.companyId != null)
+    			return false;
+    	} else if (!companyId.equals(other.companyId)) {
+    		return false;
+    	}
+    	
+    	if (description == null) {
+    		if (other.description != null)
+    			return false;
+    	} else if (!description.equals(other.description)) {
+    		return false;
+    	}
+
+    	if (website == null) {
+    		if (other.website != null)
+    			return false;
+    	} else if (!website.equals(other.website)) {
+    		return false;
+    	}
+    	if (start_date == null) {
+    		if (other.start_date != null)
+    			return false;
+    	} else if (!start_date.equals(other.start_date)) {
+    		return false;
+    	}
+    	
+    	if (end_date == null) {
+    		if (other.end_date != null)
+    			return false;
+    	} else if (!end_date.equals(other.end_date)) {
+    		return false;
+    	}
+    	
+    	if (picture == null) {
+    		if (other.picture != null)
+    			return false;
+    	} else if (!picture.equals(other.picture)) {
+    		return false;
+    	}
 	    
 	    return true;
 	}

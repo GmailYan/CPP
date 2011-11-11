@@ -3,7 +3,7 @@ package ic.doc.cpp.student.shared;
 public class FieldVerifier {
 	
 	public static boolean isValidUserName(String name) {
-		return (name != null);
+		return (name != null) && (name.length() >= 6);
 	}
 
 	/*

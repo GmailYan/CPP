@@ -4,19 +4,21 @@ import ic.doc.cpp.student.shared.dto.StudentUserDto;
 
 import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.inject.Inject;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
-import com.smartgwt.client.types.Side;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.PasswordItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
+import com.smartgwt.client.widgets.form.validator.LengthRangeValidator;
 import com.smartgwt.client.widgets.form.validator.MatchesFieldValidator;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
+import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
 
 public class StudentUserProfileView extends ViewImpl implements
 		StudentUserProfilePresenter.MyView {
@@ -24,11 +26,15 @@ public class StudentUserProfileView extends ViewImpl implements
 	private final VLayout widget;
 	private final TabSet mainTabSet; 
 
+	private VLayout interestedCompanySlot;
+	
 	private DynamicForm basicInformationForm;
 	private DynamicForm passwordSettingForm;
 	
 	private ButtonItem basicInformationUpdateButton;
 	private ButtonItem passwordSettingUpdateButton;
+	
+	private Tab interestedCompanyTab;
 	
 	@Inject
 	public StudentUserProfileView() {
@@ -37,16 +43,21 @@ public class StudentUserProfileView extends ViewImpl implements
 		
 		// initialise tabset
 		mainTabSet = new TabSet(); 
-		mainTabSet.setTabBarPosition(Side.TOP);
 		
 		// Basic information tab
 		Tab basciInformationTab = initBasicInformationTab();
+		
+		// interested company tab
+		interestedCompanyTab = new Tab();
+		interestedCompanyTab.setTitle("Interested Companies");
+		interestedCompanySlot = new VLayout();
+		interestedCompanyTab.setPane(interestedCompanySlot);
 		
 		// password setting tab
 		Tab passwordSettingTab = initPasswordSettingTab();
 		
 		// add tabs into tabset
-		mainTabSet.setTabs(basciInformationTab, passwordSettingTab);
+		mainTabSet.setTabs(basciInformationTab, interestedCompanyTab, passwordSettingTab);
 		
 		// add tabset into main container
 		widget.setMembers(mainTabSet);
@@ -62,6 +73,9 @@ public class StudentUserProfileView extends ViewImpl implements
 		PasswordItem originalPassword = new PasswordItem("originalPassword", "Original Password");
 		originalPassword.setRequired(true);
 		originalPassword.setLength(64);
+		LengthRangeValidator lengthValidator = new LengthRangeValidator();
+		lengthValidator.setMin(8);
+		originalPassword.setValidators(lengthValidator);
 		
 		PasswordItem newPasswordItem = new PasswordItem("newPassword", "New Password");
 		newPasswordItem.setRequired(true);
@@ -184,4 +198,22 @@ public class StudentUserProfileView extends ViewImpl implements
 	public String getNewPassword() {
 		return passwordSettingForm.getValue("newPassword").toString();
 	}
+	
+	@Override
+	public HandlerRegistration addTabSelectedHandler(TabSelectedHandler handler) {
+		return interestedCompanyTab.addTabSelectedHandler(handler);
+	}
+
+
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (slot == StudentUserProfilePresenter.TYPE_RevealInterestedCompany) {
+			if (content != null && content instanceof VLayout) {
+				GWT.log("Reveal iterested companys");
+				interestedCompanySlot.setMembers((VLayout)content);
+			}
+		}
+	}
+	
+	
 }

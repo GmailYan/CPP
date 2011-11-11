@@ -3,6 +3,7 @@ package ic.doc.cpp.student.client.core.companydata;
 import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.inject.Inject;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
 import com.smartgwt.client.types.VisibilityMode;
 import com.smartgwt.client.widgets.layout.SectionStack;
@@ -10,6 +11,7 @@ import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.menu.Menu;
 import com.smartgwt.client.widgets.menu.MenuItem;
+import com.smartgwt.client.widgets.menu.events.ClickHandler;
 
 public class CompanyDataView extends ViewImpl implements
 		CompanyDataPresenter.MyView {
@@ -100,5 +102,11 @@ public class CompanyDataView extends ViewImpl implements
 		} else {
 			super.setInSlot(slot, content);
 		}
+	}
+
+	@Override
+	public HandlerRegistration addLikeMenuItemClickHandler(
+			ClickHandler clickHandler) {
+		return getItemListMenu().getItem(0).addClickHandler(clickHandler);
 	}
 }

@@ -29,7 +29,7 @@ public class CompanyTileGridWidgetView extends ViewImpl implements
 		companyTileGrid.setCanReorderTiles(true);
 		companyTileGrid.setShowAllRecords(true);
 		companyTileGrid.setAnimateTileChange(true);
-	    
+		companyTileGrid.setAutoFetchData(true);
 	}
 	
 	@Override
@@ -43,12 +43,9 @@ public class CompanyTileGridWidgetView extends ViewImpl implements
 		companyTileGrid.setDataSource(ds);
 	    
 	    DetailViewerField pictureField = new DetailViewerField("logo");
-	    //pictureField.setType("image");
-	    //pictureField.setImageURLPrefix("companyLogo/");
 	    pictureField.setImageSize(140);
-	    
 	    DetailViewerField nameField = new DetailViewerField("name");
-	    DetailViewerField cidField = new DetailViewerField("CID");
+	    DetailViewerField cidField = new DetailViewerField("companyId");
 	    
 	    companyTileGrid.setFields(pictureField, nameField, cidField);
 	}
@@ -63,7 +60,7 @@ public class CompanyTileGridWidgetView extends ViewImpl implements
 			ShowContextMenuHandler showContextMenuHandler) {
 		return companyTileGrid.addShowContextMenuHandler(showContextMenuHandler);
 	}
-
+	
 	@Override
 	public Record getSelectedRecord() {
 		return companyTileGrid.getSelectedRecord();
@@ -73,4 +70,20 @@ public class CompanyTileGridWidgetView extends ViewImpl implements
 	public void filterData(Criteria criteria) {
 		companyTileGrid.filterData(criteria);
 	}
+	
+	@Override
+	public void addData(Record record) {
+		companyTileGrid.addData(record);
+	}
+	
+	@Override
+	public void removeData(Record record) {
+		companyTileGrid.removeData(record);
+	}
+
+	@Override
+	public void addData(Record[] records) {
+		companyTileGrid.setData(records);
+	}
+
 }

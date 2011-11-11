@@ -53,26 +53,31 @@ public class CompanyTest {
 		Company company1 = new Company();
 		company1.setName("MorganStanley");
 		company1.setCategory(companyCategoryDao.retrieveCompanyCategory(3L));
+		company1.setLogo("morganstanley.jpg");
 		companyDao.createCompany(company1);
 		
 		Company company2 = new Company();
 		company2.setName("ABC");
 		company2.setCategory(companyCategoryDao.retrieveCompanyCategory(2L));
+		company2.setLogo("abc.jpg");
 		companyDao.createCompany(company2);
 		
 		Company company3 = new Company();
 		company3.setName("Microsoft");
 		company3.setCategory(companyCategoryDao.retrieveCompanyCategory(7L));
+		company3.setLogo("microsoft.jpg");
 		companyDao.createCompany(company3);
 
 		Company company4 = new Company();
 		company4.setName("Google");
 		company4.setCategory(companyCategoryDao.retrieveCompanyCategory(6L));
+		company4.setLogo("google.jpg");
 		companyDao.createCompany(company4);
 		
 		Company company5 = new Company();
 		company5.setName("Intel");
 		company5.setCategory(companyCategoryDao.retrieveCompanyCategory(8L));
+		company5.setLogo("intel.jpg");
 		companyDao.createCompany(company5);
 		
 		Company company6 = new Company();

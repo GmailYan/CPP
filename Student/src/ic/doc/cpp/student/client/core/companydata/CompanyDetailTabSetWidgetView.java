@@ -61,6 +61,11 @@ public class CompanyDetailTabSetWidgetView extends ViewImpl implements
 	}
 	
 	@Override
+	public void setEventListGridData(Record[] records) {
+		eventListGrid.setData(records);
+	}
+	
+	@Override
 	public HandlerRegistration addTabSeletedHandler(TabSelectedHandler handler) {
 		return widget.addTabSelectedHandler(handler);
 	}

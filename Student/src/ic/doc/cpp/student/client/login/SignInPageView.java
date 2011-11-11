@@ -53,7 +53,7 @@ public class SignInPageView extends ViewImpl implements
 		 passwordField = new PasswordTextBox();
 		 signInButton = new Button("Sign in");
 
-		 userNameField.setText("dzz");
+		 userNameField.setText("DuZhouzhou");
 		 passwordField.setText("N0More$ecret");
 
 		 panel.add(userNameField, "userNameFieldContainer");

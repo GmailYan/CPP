@@ -60,11 +60,11 @@ public class EventTest {
 			eventDao.deleteEvent(event);
 	}
 
-	private void deleteCompanyAffectEvent() {
-		CompanyDao companyDao = new CompanyDao();
-		Company company = companyDao.retrieveCompany(1L);
-		companyDao.deleteCompany(company);
-	}
+//	private void deleteCompanyAffectEvent() {
+//		CompanyDao companyDao = new CompanyDao();
+//		Company company = companyDao.retrieveCompany(1L);
+//		companyDao.deleteCompany(company);
+//	}
 
 	private void createEvent() {
 		EventDao eventDao = new EventDao();

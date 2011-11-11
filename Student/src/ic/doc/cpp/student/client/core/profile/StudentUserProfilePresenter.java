@@ -29,12 +29,17 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
+import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
+import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
 
 public class StudentUserProfilePresenter
 		extends
 		Presenter<StudentUserProfilePresenter.MyView, StudentUserProfilePresenter.MyProxy> {
 
 	private final DispatchAsync dispatcher;
+	private final InterestedCompanyWidgetPresenter interestedCompanyWidgetPresenter;
+	
+	public static final Object TYPE_RevealInterestedCompany = new Object(); 
 	
 	public interface MyView extends View {
 
@@ -56,6 +61,8 @@ public class StudentUserProfilePresenter
 
 		String getNewPassword();
 
+		HandlerRegistration addTabSelectedHandler(TabSelectedHandler handler);
+
 	}
 
 	@ProxyCodeSplit
@@ -66,9 +73,11 @@ public class StudentUserProfilePresenter
 
 	@Inject
 	public StudentUserProfilePresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy, final DispatchAsync dispatcher) {
+			final MyProxy proxy, final DispatchAsync dispatcher, 
+			final InterestedCompanyWidgetPresenter interestedCompanyWidgetPresenter) {
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
+		this.interestedCompanyWidgetPresenter = interestedCompanyWidgetPresenter;
 	}
 
 	@Override
@@ -131,6 +140,14 @@ public class StudentUserProfilePresenter
 				}
 			}
 			
+		}));
+		
+		registerHandler(getView().addTabSelectedHandler(new TabSelectedHandler() {
+			
+			@Override
+			public void onTabSelected(TabSelectedEvent event) {
+				setInSlot(TYPE_RevealInterestedCompany, interestedCompanyWidgetPresenter);
+			}
 		}));
 	}
 

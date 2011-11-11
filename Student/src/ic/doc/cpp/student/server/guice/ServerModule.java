@@ -14,6 +14,16 @@ import ic.doc.cpp.student.shared.action.UpdateStudentUserInformation;
 import ic.doc.cpp.student.server.handler.UpdateStudentUserInformationActionHandler;
 import ic.doc.cpp.student.shared.action.UpdatePassword;
 import ic.doc.cpp.student.server.handler.UpdatePasswordActionHandler;
+import ic.doc.cpp.student.shared.action.RetrieveStudentInterestedCompanies;
+import ic.doc.cpp.student.server.handler.RetrieveStudentInterestedCompaniesActionHandler;
+import ic.doc.cpp.student.shared.action.RemoveStudentInterestedCompany;
+import ic.doc.cpp.student.server.handler.RemoveStudentInterestedCompanyActionHandler;
+import ic.doc.cpp.student.shared.action.RetrieveCompanys;
+import ic.doc.cpp.student.server.handler.RetrieveCompanysActionHandler;
+import ic.doc.cpp.student.shared.action.RetrieveCompanyEvents;
+import ic.doc.cpp.student.server.handler.RetrieveCompanyEventsActionHandler;
+import ic.doc.cpp.student.shared.action.AddStudentInterestedCompany;
+import ic.doc.cpp.student.server.handler.AddStudentInterestedCompanyActionHandler;
 
 public class ServerModule extends HandlerModule {
 
@@ -37,6 +47,26 @@ public class ServerModule extends HandlerModule {
 				LoggedInActionValidator.class);
 
 		bindHandler(UpdatePassword.class, UpdatePasswordActionHandler.class,
+				LoggedInActionValidator.class);
+
+		bindHandler(RetrieveStudentInterestedCompanies.class,
+				RetrieveStudentInterestedCompaniesActionHandler.class,
+				LoggedInActionValidator.class);
+
+		bindHandler(RemoveStudentInterestedCompany.class,
+				RemoveStudentInterestedCompanyActionHandler.class,
+				LoggedInActionValidator.class);
+
+		bindHandler(RetrieveCompanys.class,
+				RetrieveCompanysActionHandler.class,
+				LoggedInActionValidator.class);
+
+		bindHandler(RetrieveCompanyEvents.class,
+				RetrieveCompanyEventsActionHandler.class,
+				LoggedInActionValidator.class);
+
+		bindHandler(AddStudentInterestedCompany.class,
+				AddStudentInterestedCompanyActionHandler.class,
 				LoggedInActionValidator.class);
 	}
 }

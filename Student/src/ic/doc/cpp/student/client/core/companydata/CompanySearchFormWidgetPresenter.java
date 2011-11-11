@@ -1,6 +1,6 @@
 package ic.doc.cpp.student.client.core.companydata;
 
-import ic.doc.cpp.student.client.core.data.CompanyDetailXmlDS;
+import ic.doc.cpp.student.client.core.data.CompanyDetailDataSource;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.google.inject.Inject;
@@ -32,6 +32,6 @@ public class CompanySearchFormWidgetPresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
-		getView().setDataSource(CompanyDetailXmlDS.getInstance());
+		getView().setDataSource(CompanyDetailDataSource.getInstance());
 	}
 }
