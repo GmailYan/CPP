@@ -6,7 +6,6 @@ import com.gwtplatform.mvp.client.View;
 import com.google.inject.Inject;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
@@ -19,7 +18,6 @@ public class CompanySearchFormWidgetPresenter extends
 		HandlerRegistration addFindListener(ClickHandler handler);
 		void setDataSource(DataSource ds);
 		String getValueAsString(String string);
-		Criteria getValuesAsCriteria();
 		
 	}
 

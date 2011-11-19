@@ -68,7 +68,7 @@ public class StudentPagePresenter extends
 	protected void onBind() {
 		super.onBind();
 		
-		registerHandler(getView().getNavigationPane().addRecordClickHandler("Tools", new NavigationPaneRecordClickHandler()));
+		registerHandler(getView().getNavigationPane().addRecordClickHandler("Main", new NavigationPaneRecordClickHandler()));
 		
 		registerHandler(getView().getNavigationPane().addSectionHeaderClickHandler(new NavigationPaneSectionHeaderClickHandler()));
 	}
@@ -85,7 +85,7 @@ public class StudentPagePresenter extends
 		
 		setInSlot(TYPE_RevealCompanyCategory, companyCategory);
 		
-		PlaceRequest myRequset = new PlaceRequest(NameTokens.companydata);
+		PlaceRequest myRequset = new PlaceRequest(NameTokens.eventfeed);
 		placeManager.revealPlace(myRequset);
 	}
 	

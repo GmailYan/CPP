@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
-import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.events.ShowContextMenuHandler;
@@ -26,7 +25,6 @@ public class CompanyTileGridWidgetView extends ViewImpl implements
 		companyTileGrid.setTileWidth(150);
 		companyTileGrid.setTileHeight(205);
 		companyTileGrid.setHeight("*");
-		companyTileGrid.setCanReorderTiles(true);
 		companyTileGrid.setShowAllRecords(true);
 		companyTileGrid.setAnimateTileChange(true);
 		companyTileGrid.setAutoFetchData(true);
@@ -67,22 +65,7 @@ public class CompanyTileGridWidgetView extends ViewImpl implements
 	}
 
 	@Override
-	public void filterData(Criteria criteria) {
-		companyTileGrid.filterData(criteria);
-	}
-	
-	@Override
-	public void addData(Record record) {
-		companyTileGrid.addData(record);
-	}
-	
-	@Override
-	public void removeData(Record record) {
-		companyTileGrid.removeData(record);
-	}
-
-	@Override
-	public void addData(Record[] records) {
+	public void setData(Record[] records) {
 		companyTileGrid.setData(records);
 	}
 

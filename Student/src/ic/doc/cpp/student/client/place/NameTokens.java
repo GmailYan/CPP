@@ -10,6 +10,7 @@ public class NameTokens {
 	public static final String profile = "profile";
 	public static final String errorpage = "errorpage";
 	public static final String automatch = "automatch";
+	public static final String eventfeed = "eventfeed";
 
 	public static String getStudentpage() {
 		return studentpage;
@@ -41,6 +42,10 @@ public class NameTokens {
 
 	public static String getAutomatch() {
 		return automatch;
+	}
+
+	public static String getEventfeed() {
+		return eventfeed;
 	}
 
 }

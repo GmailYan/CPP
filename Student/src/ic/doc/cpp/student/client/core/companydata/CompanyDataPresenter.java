@@ -10,6 +10,7 @@ import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 
 import ic.doc.cpp.student.client.LoggedInGatekeeper;
 import ic.doc.cpp.student.client.place.NameTokens;
+import ic.doc.cpp.student.client.util.CreateRecordFromDto;
 
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.inject.Inject;
@@ -18,7 +19,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
-import com.smartgwt.client.data.Criteria;
+import com.smartgwt.client.data.Record;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.events.ShowContextMenuEvent;
 import com.smartgwt.client.widgets.events.ShowContextMenuHandler;
@@ -37,6 +38,8 @@ import ic.doc.cpp.student.client.core.CompanyCategoryWidgetPresenter;
 import ic.doc.cpp.student.client.core.StudentPagePresenter;
 import ic.doc.cpp.student.shared.action.AddStudentInterestedCompany;
 import ic.doc.cpp.student.shared.action.AddStudentInterestedCompanyResult;
+import ic.doc.cpp.student.shared.action.RetrieveCompanysUsingNameAndCategory;
+import ic.doc.cpp.student.shared.action.RetrieveCompanysUsingNameAndCategoryResult;
 
 public class CompanyDataPresenter extends
 		Presenter<CompanyDataPresenter.MyView, CompanyDataPresenter.MyProxy> {
@@ -130,20 +133,22 @@ public class CompanyDataPresenter extends
 			@Override
 			public void onClick(MenuItemClickEvent event) {
 				Long companyId = companyTileGrid.getSelectedCompanyId();
-				dispatcher.execute(new AddStudentInterestedCompany(companyId), 
-						new AsyncCallback<AddStudentInterestedCompanyResult>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						GWT.log("Fail on addStudentInterestedCompany() - " + caught.getLocalizedMessage());
-					}
-
-					@Override
-					public void onSuccess(
-							AddStudentInterestedCompanyResult result) {
-						SC.say(result.getMessage());
-					}
-				});
+				if (companyId != null) {
+					dispatcher.execute(new AddStudentInterestedCompany(companyId), 
+							new AsyncCallback<AddStudentInterestedCompanyResult>() {
+	
+						@Override
+						public void onFailure(Throwable caught) {
+							GWT.log("Fail on addStudentInterestedCompany() - " + caught.getLocalizedMessage());
+						}
+	
+						@Override
+						public void onSuccess(
+								AddStudentInterestedCompanyResult result) {
+							SC.say(result.getMessage());
+						}
+					});
+				}
 			}
 		}));
 	}
@@ -162,23 +167,40 @@ public class CompanyDataPresenter extends
 	}
 
 	public void findItems() {
-        Criteria findValues = null;  
-        String categoryName = "";
+		String companyName = null;
+        String categoryName = null;
+        
         String findInCategory = searchForm.getView().getValueAsString("findInCategory");
         ListGridRecord selectedCategory = companyCategory.getView().getSelectedRecord();
 
         if (findInCategory.equals("true") && selectedCategory != null) {
         	categoryName = selectedCategory.getAttribute("categoryActuralName");  
-            findValues = searchForm.getView().getValuesAsCriteria();
-            findValues.addCriteria("category", categoryName);  
+        	companyName = searchForm.getView().getValueAsString("name");
         } else if (!findInCategory.equals("true")) {
-        	findValues = searchForm.getView().getValuesAsCriteria();  
+        	companyName = searchForm.getView().getValueAsString("name");
         } else {
         	SC.say("Please select a category to use category!");
         }
         
-        if (findValues != null)
-        	companyTileGrid.getView().filterData(findValues);
+        dispatcher.execute(
+        		new RetrieveCompanysUsingNameAndCategory(companyName, categoryName), 
+        		new AsyncCallback<RetrieveCompanysUsingNameAndCategoryResult>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						GWT.log("Fail on RetrieveCompanysUsingNameAndCategory()...");
+					}
+
+					@Override
+					public void onSuccess(
+							RetrieveCompanysUsingNameAndCategoryResult result) {
+						if (result != null) {
+							companyTileGrid.getView().setData(
+									CreateRecordFromDto.createCompanyTileRecordsFromCompanyDtos(
+											result.getCompanyDtos()).toArray(new Record[0]));
+						}
+					}
+		});
         
     	companyDetailTabset.clearDetails();
         

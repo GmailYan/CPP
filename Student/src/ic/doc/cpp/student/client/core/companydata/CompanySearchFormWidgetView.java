@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
-import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.widgets.form.SearchForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
@@ -44,7 +43,7 @@ public class CompanySearchFormWidgetView extends ViewImpl implements
 		searchForm.setDataSource(ds);
 	    
 	    findCompanyButton = new ButtonItem("Find");
-	    //findItem.setIcon("silk/find.png");
+	    findCompanyButton.setIcon("icons/48/find.png");
 	    findCompanyButton.setWidth(70);
 	    findCompanyButton.setEndRow(false);
 	
@@ -74,9 +73,4 @@ public class CompanySearchFormWidgetView extends ViewImpl implements
 		return searchForm.getValueAsString(fieldName);
 	}
 
-	@Override
-	public Criteria getValuesAsCriteria() {
-		return searchForm.getValuesAsCriteria();
-	}
-	
 }

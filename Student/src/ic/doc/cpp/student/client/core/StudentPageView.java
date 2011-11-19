@@ -84,6 +84,9 @@ public class StudentPageView extends ViewImpl implements
 	
 	private void initNavigationPane() {
 		companyCategoryTreeGridSlot = new VLayout();
+		
+		navigationPane.addListgridSection("Main", ToolsNavigationPaneSectionData.getNewRecords());
+		
 		CategorySectionStackSection companyCategorySection = 
 				new CompanyCategorySection("Comapany Category", NameTokens.companydata, companyCategoryTreeGridSlot);
 		    
@@ -95,14 +98,13 @@ public class StudentPageView extends ViewImpl implements
 		
 		navigationPane.addCategorySection(eventCategorySection);
 		
-		navigationPane.addListgridSection("Tools", ToolsNavigationPaneSectionData.getNewRecords());
 	}
 	
 	private void initApplicationMenu() {
 	    applicationMenu.addMenu("<u>U</u>ser", DEFAULT_MENU_WIDTH,
 	    		"Profile, Log out");
 	    applicationMenu.addMenu("<u>H</u>elp", DEFAULT_MENU_WIDTH, 
-	    		"Help on this Page, Contents, About CPP-Student");
+	    		"How to Use, Report Bug, About");
 	}
 	
 	@Override

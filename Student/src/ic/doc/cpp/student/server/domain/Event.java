@@ -1,6 +1,6 @@
 package ic.doc.cpp.student.server.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "events")
-public class Event {
+public class Event extends BaseEntity{
 	@Id
 	@Column(name = "event_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -118,6 +118,7 @@ public class Event {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
 		sb.append("Id: ").append(eventId).append(", ");
 		sb.append("Title: ").append(title).append(", ");
 		sb.append("Category: ").append(category.categoryName).append(";");

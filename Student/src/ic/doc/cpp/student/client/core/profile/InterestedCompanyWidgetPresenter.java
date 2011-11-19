@@ -7,7 +7,6 @@ import ic.doc.cpp.student.shared.action.RetrieveStudentInterestedCompanies;
 import ic.doc.cpp.student.shared.action.RetrieveStudentInterestedCompaniesResult;
 import ic.doc.cpp.student.shared.dto.CompanyDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -30,13 +29,13 @@ import com.smartgwt.client.widgets.events.ShowContextMenuHandler;
 import com.smartgwt.client.widgets.menu.Menu;
 import com.smartgwt.client.widgets.menu.events.ClickHandler;
 import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
+import com.smartgwt.client.widgets.tile.TileGrid;
+import com.smartgwt.client.widgets.tile.TileRecord;
 
 public class InterestedCompanyWidgetPresenter extends
 		PresenterWidget<InterestedCompanyWidgetPresenter.MyView> {
 
 	private final DispatchAsync dispatcher;
-	
-	private List<Record> oldRecords = new ArrayList<Record>(); 
 	
 	public interface MyView extends View {
 
@@ -44,7 +43,7 @@ public class InterestedCompanyWidgetPresenter extends
 
 		HandlerRegistration addRemoveMenuItemClickHandler(ClickHandler handler);
 
-		Record getSelectedRecord();
+		TileRecord getSelectedRecord();
 
 		void deleteRecord(Record record);
 
@@ -66,6 +65,8 @@ public class InterestedCompanyWidgetPresenter extends
 		void showWinModal();
 
 		void addRecord(Record record);
+
+		TileGrid getTileGrid();
 		
 	}
 
@@ -123,8 +124,8 @@ public class InterestedCompanyWidgetPresenter extends
 						@Override
 						public void onSuccess(
 								RemoveStudentInterestedCompanyResult result) {
-							SC.say("Remove Interested List", "Remove " + record.getAttribute("companyName") + " Successful!");
-							getView().deleteRecord(record);
+							SC.say("Remove Interested List", "Remove " + record.getAttribute("name") + " from list Successful!");
+							onReset();
 						}
 					});
 				}
@@ -159,53 +160,13 @@ public class InterestedCompanyWidgetPresenter extends
 	}
 	
 	private void updateDataSource(List<CompanyDto> companyDtos) {
-		List<Record> latestRecords = new ArrayList<Record>();
+		Record[] latestRecords = new Record[companyDtos.size()];
+		int i = 0;
 		for (CompanyDto companyDto : companyDtos) {
 			Record record = CreateRecordFromDto.createCompanyTileRecordFromCompanyDto(companyDto);
-			latestRecords.add(record);
+			latestRecords[i++] = record;
 		}
-		if (oldRecords.size() == 0) {
-			for (Record record : latestRecords) {
-				getView().addRecord(record);
-				oldRecords.add(record);
-			}
-		} else {
-			List<Record> addRecords = new ArrayList<Record>();
-			List<Record> delRecords = new ArrayList<Record>();
-			for (Record o : oldRecords) {
-				boolean flag = false;
-				for (Record n : latestRecords) {
-					if (o.equals(n)) {
-						flag = true;
-						break;
-					}
-				}
-				if (!flag)
-					delRecords.add(o);
-			}
-			
-			for (Record n : latestRecords) {
-				boolean flag = true;
-				for (Record o : oldRecords) {
-					if (o.equals(n)) {
-						flag = false;
-						break;
-					}
-				}
-				if (flag)
-					addRecords.add(n);
-			}
-			
-			for (Record record : addRecords) {
-				getView().addRecord(record);
-				oldRecords.add(record);
-			}
-			
-			for (Record record : delRecords) {
-				getView().deleteRecord(record);
-				oldRecords.remove(record);
-			}
-		}
+		getView().getTileGrid().setData(latestRecords);
 	}
 
 	@Override

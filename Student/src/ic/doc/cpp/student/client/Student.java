@@ -23,9 +23,8 @@ public class Student implements EntryPoint {
 	public void onModuleLoad() {
 		GWT.<GlobalResources>create(GlobalResources.class).css().ensureInjected();
 		
-		// This is required for Gwt-Platform proxy's generator
 		DelayedBindRegistry.bind(ginjector);
-	
+		
 		ginjector.getPlaceManager().revealCurrentPlace();
 		
 		RootPanel.get("loading") .setVisible(false);

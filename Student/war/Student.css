@@ -11,7 +11,7 @@ body, table td, select {
 .crm-ContextArea {
   border-top: 1px solid #7598c7;	
 	
- /* background-image: url(images/context_area.png);*/
+  background-image: url(images/context_area.png);
   background-repeat: repeat-x;  
   
   padding-top: 4px;
@@ -21,7 +21,7 @@ body, table td, select {
 }
 
 .crm-ApplicationMenu {
- /* background-image: url(images/application_menu.png);*/
+  background-image: url(images/application_menu.png);
   background-repeat: repeat-x; 
   
   padding-top: 4px;
@@ -52,7 +52,7 @@ body, table td, select {
  
 .menuButtonOver {
   border: #ffdb6c 1px solid;   
-  /*background-image: url(images/application_menu_button_over.png);*/
+  background-image: url(images/application_menu_button_over.png);
   background-repeat: repeat-x;    
   color: #15428b;   
   cursor: default;
@@ -68,7 +68,7 @@ body, table td, select {
 .menuButtonSelectedDown,
 .menuButtonSelectedOver {
   border: #ffdb6c 1px solid;   
-  /*background-image: url(images/application_menu_button_down.png);*/
+  background-image: url(images/application_menu_button_down.png);
   background-repeat: repeat-x;    
   color: #15428b;   
   cursor: default;
@@ -107,13 +107,13 @@ body, table td, select {
 }
 
 .crm-Masthead {
-  /*background-image: url(images/masthead.png);*/
+  background-image: url(images/masthead.png);
   background-repeat: repeat-x; 
 }
 
 .crm-Masthead-Logo {
-  /* height: 48px;
-  width: 48px; */
+  height: 48px;
+  width: 48px;
   padding-top: 4px;
   padding-left: 8px;	
 }
@@ -190,6 +190,12 @@ body, table td, select {
  * Navigation Pane ListGrid cells
  */
  
+ .basePanel {
+	color: black;
+ 	font-family: Tahoma, Verdana, sans-serif;
+ 	font-size: 50px;
+ }
+ 
  .crm-NavigationPaneGridCell {
   color: black;
   cursor: pointer;
@@ -208,7 +214,7 @@ body, table td, select {
   
 .crm-NavigationPaneGridCellOver,
 .crm-NavigationPaneGridCellOverDark {
-  /* background: url(images/navigation_pane_gridcell_over.png) repeat-x bottom left scroll; */
+  background: url(images/navigation_pane_gridcell_over.png) repeat-x bottom left scroll;
   border-top: 1px solid #ffb74c; 
   border-bottom:1px solid #ffb74c; 	
   color: black;
@@ -240,4 +246,115 @@ body, table td, select {
   cursor: hand;  
   font-family: Tahoma, Verdana, sans-serif;
   font-size: 11px;
+}
+
+.header {
+	color: white;
+  	width: 100%;
+ 	padding: 10px;
+  	font-family: Helvetica sans-serif;
+  	font-weight: bold;
+  	font-size: 17pt;
+  	background: url(images/iPhoneToolbar.png) #6d84a2 repeat-x;
+}
+
+.title {
+	cursor: pointer;
+	color: white;
+	font-family: Helvetica sans-serif;
+  	font-weight: bold;
+  	font-size: 17pt;
+}
+
+.PanelLabel {
+  	border-bottom: 1px solid rgb(217, 217, 217);
+}
+
+.PanelLabelContent {
+	font-size: 30pt;
+	font-weight: heavy;
+}
+
+.backButton {
+	cursor: pointer;
+	font-size: 10pt;
+	font-weight: normal;
+  	vertical-align: middle;
+  	border-width: 0 8px 0 14px;
+   	-webkit-border-image: url(images/iPhoneBackButton.png) 0 8 0 14;
+}
+
+.goButton {
+  	cursor: pointer;
+  	font-size: 10pt;
+  	font-weight: normal;
+  	vertical-align: middle;
+    border-width: 0 5px;
+    -webkit-border-image: url(images/iPhoneButton.png) 0 5 0 5;
+}
+
+.fullFontsListGridCell,
+.fullFontsListGridCellDark,
+.fullFontsListGridCellOver,
+.fullFontsListGridCellOverDark,
+.fullFontsListGridCellSelected,
+.fullFontsListGridCellSelectedDark,
+.fullFontsListGridCellSelectedOver,
+.fullFontsListGridCellSelectedOverDark,
+.fullFontsListGridCellDisabled,
+.fullFontsListGridCellDisabledDark {
+	border-bottom: 1px solid #a0a0a0;
+	font-family: 'Segoe UI','Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif;
+	padding: 7px;
+	vertical-align: top;
+}
+
+.fullFontsListGridCell,
+.fullFontsListGridCellDark {
+	color: #000;
+	background-color: #FFF;
+}
+
+.fullFontsListGridCellOver,
+.fullFontsListGridCellOverDark {
+	color: #000;
+	background-color: #E5F6FF;
+}
+
+.fullFontsListGridCellSelected,
+.fullFontsListGridCellSelectedDark {
+	color: #FFF;
+	background-color: #D4E8FF;
+}
+
+.fullFontsListGridCellSelectedOver,
+.fullFontsListGridCellSelectedOverDark {
+	color: #FFF;
+	background-color: #A2CBFF;
+}
+
+.listViewTitle,
+.listViewExcerpt,
+.listViewPageInfo,
+.listViewPageHighlightInfo,
+.listViewFileFormat,
+.listViewUrl {
+	font-size:13px; 
+	line-height: 19px;
+	font-family: 'Segoe UI','Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif;
+	color: #000;
+}
+
+.listViewTitle{
+	font-size:16px;
+	line-height: 22px; 
+	font-weight: bold;
+}
+.listViewPageInfo{
+	color:#1A1A1A;
+}
+
+.listViewPageInfo.divider,
+.flexTable.divider{
+	color:#999;
 }

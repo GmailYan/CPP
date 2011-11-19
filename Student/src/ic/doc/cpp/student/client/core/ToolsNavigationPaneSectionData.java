@@ -15,9 +15,10 @@ public class ToolsNavigationPaneSectionData {
 
 	  public static ListgridSectionStackSectionRecord[] getNewRecords() {
 		return new ListgridSectionStackSectionRecord[]{
-				new ListgridSectionStackSectionRecord(NameTokens.profile, "User Profile", null),
-				new ListgridSectionStackSectionRecord(NameTokens.calendar, "Calendar", null),
-				new ListgridSectionStackSectionRecord(NameTokens.automatch, "Company Auto Match", null)
+				new ListgridSectionStackSectionRecord("opportunity", NameTokens.eventfeed, "News Feed", null),
+				new ListgridSectionStackSectionRecord("profile", NameTokens.profile, "User Profile", null),
+				new ListgridSectionStackSectionRecord("calendar", NameTokens.calendar, "Calendar", null),
+				new ListgridSectionStackSectionRecord("automatch", NameTokens.automatch, "Company Auto Match", null)
 		};
 	  }
 	}

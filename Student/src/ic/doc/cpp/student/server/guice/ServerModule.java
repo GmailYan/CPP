@@ -24,6 +24,10 @@ import ic.doc.cpp.student.shared.action.RetrieveCompanyEvents;
 import ic.doc.cpp.student.server.handler.RetrieveCompanyEventsActionHandler;
 import ic.doc.cpp.student.shared.action.AddStudentInterestedCompany;
 import ic.doc.cpp.student.server.handler.AddStudentInterestedCompanyActionHandler;
+import ic.doc.cpp.student.shared.action.RetrieveCompanysUsingNameAndCategory;
+import ic.doc.cpp.student.server.handler.RetrieveCompanysUsingNameAndCategoryActionHandler;
+import ic.doc.cpp.student.shared.action.RetrieveEventsUsingCategoryId;
+import ic.doc.cpp.student.server.handler.RetrieveEventsUsingCategoryIdActionHandler;
 
 public class ServerModule extends HandlerModule {
 
@@ -67,6 +71,14 @@ public class ServerModule extends HandlerModule {
 
 		bindHandler(AddStudentInterestedCompany.class,
 				AddStudentInterestedCompanyActionHandler.class,
+				LoggedInActionValidator.class);
+
+		bindHandler(RetrieveCompanysUsingNameAndCategory.class,
+				RetrieveCompanysUsingNameAndCategoryActionHandler.class,
+				LoggedInActionValidator.class);
+
+		bindHandler(RetrieveEventsUsingCategoryId.class,
+				RetrieveEventsUsingCategoryIdActionHandler.class,
 				LoggedInActionValidator.class);
 	}
 }

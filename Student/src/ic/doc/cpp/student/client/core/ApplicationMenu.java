@@ -25,7 +25,6 @@ public class ApplicationMenu extends HLayout {
 	    // initialise the Application Menu layout container
 		setStyleName("crm-ApplicationMenu");	
 	    setHeight(APPLICATION_MENU_HEIGHT);
-	    setBackgroundColor("#1589FF");
 	    
 	    // initialise the Menu Bar
 		menuBar = new MenuBar();
@@ -71,8 +70,8 @@ public class ApplicationMenu extends HLayout {
 				continue;
 			}
 			  
-//			MenuItem menuItem = new MenuItem(menuItems[i], getIcon(menuItems[i])); 
-			MenuItem menuItem = new MenuItem(menuItems[i]);
+			MenuItem menuItem = new MenuItem(menuItems[i], getIcon(menuItems[i])); 
+//			MenuItem menuItem = new MenuItem(menuItems[i]);
 			menu.addItem(menuItem);    
 		}
 		
@@ -106,8 +105,8 @@ public class ApplicationMenu extends HLayout {
 		    continue;
 		  }
 				  
-		  //menuItem = new MenuItem(menuItems[i], getIcon(menuItems[i])); 
-		  menuItem = new MenuItem(menuItems[i]); 
+		  menuItem = new MenuItem(menuItems[i], getIcon(menuItems[i])); 
+//		  menuItem = new MenuItem(menuItems[i]); 
 		  menu.addItem(menuItem);    
 		}
 				
@@ -125,11 +124,11 @@ public class ApplicationMenu extends HLayout {
 	    return line.split(DELIMITER);
 	  }
 		  
-//	  private String getIcon(String applicationName) {
-//		// remove any whitespace
-//		String name = applicationName.replaceAll("\\W", "");
-//		// e.g. "icons/16/" + "activities" + ".png"	
-//		String icon = ICON_PREFIX + name.toLowerCase() + ICON_SUFFIX ; 
-//		return icon ;
-//	  }
+	  private String getIcon(String applicationName) {
+		// remove any whitespace
+		String name = applicationName.replaceAll("\\W", "");
+		// e.g. "icons/16/" + "activities" + ".png"	
+		String icon = "icons/16/" + name.toLowerCase() + ".png"; 
+		return icon ;
+	  }
 }

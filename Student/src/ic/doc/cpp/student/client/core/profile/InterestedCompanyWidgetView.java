@@ -21,6 +21,7 @@ import com.smartgwt.client.widgets.menu.Menu;
 import com.smartgwt.client.widgets.menu.MenuItem;
 import com.smartgwt.client.widgets.menu.events.ClickHandler;
 import com.smartgwt.client.widgets.tile.TileGrid;
+import com.smartgwt.client.widgets.tile.TileRecord;
 import com.smartgwt.client.widgets.viewer.DetailViewer;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
 
@@ -63,7 +64,6 @@ public class InterestedCompanyWidgetView extends ViewImpl implements
 		interestedCompanyTileGrid.setTileHeight(205);
 		interestedCompanyTileGrid.setAnimateTileChange(true);
 		interestedCompanyTileGrid.setAutoFetchData(true);
-		interestedCompanyTileGrid.setCanReorderTiles(true);
 		interestedCompanyTileGrid.setShowAllRecords(true);
 		interestedCompanyTileGrid.setDataSource(dataSource);
 		
@@ -124,7 +124,7 @@ public class InterestedCompanyWidgetView extends ViewImpl implements
 	}
 
 	@Override
-	public Record getSelectedRecord() {
+	public TileRecord getSelectedRecord() {
 		return interestedCompanyTileGrid.getSelectedRecord();
 	}
 
@@ -168,5 +168,10 @@ public class InterestedCompanyWidgetView extends ViewImpl implements
 	@Override
 	public void showWinModal() {
 		winModal.show();
+	}
+	
+	@Override
+	public TileGrid getTileGrid() {
+		return interestedCompanyTileGrid;
 	}
 }

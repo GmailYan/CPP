@@ -19,6 +19,7 @@ import ic.doc.cpp.student.client.login.SignInPagePresenter;
 import ic.doc.cpp.student.client.core.profile.StudentUserProfilePresenter;
 import ic.doc.cpp.student.client.errorpage.ErrorPagePresenter;
 import ic.doc.cpp.student.client.core.automatch.AutoMatchPresenter;
+import ic.doc.cpp.student.client.core.newsfeed.EventsFeedPresenter;
 
 @GinModules({ DispatchAsyncModule.class, ClientModule.class })
 public interface ClientGinjector extends Ginjector {
@@ -44,5 +45,8 @@ public interface ClientGinjector extends Ginjector {
 	AsyncProvider<ErrorPagePresenter> getErrorPagePresenter();
 
 	AsyncProvider<AutoMatchPresenter> getAutoMatchPresenter();
+
+	AsyncProvider<EventsFeedPresenter> getEventsFeedPresenter();
+
 
 }

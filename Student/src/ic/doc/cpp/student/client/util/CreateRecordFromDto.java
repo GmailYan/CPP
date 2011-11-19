@@ -1,5 +1,6 @@
 package ic.doc.cpp.student.client.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.smartgwt.client.data.Record;
@@ -9,6 +10,16 @@ import ic.doc.cpp.student.shared.dto.CompanyDto;
 import ic.doc.cpp.student.shared.dto.EventDto;
 
 public class CreateRecordFromDto {
+	
+	public static List<CompanyTileRecord>
+	createCompanyTileRecordsFromCompanyDtos(List<CompanyDto> companyDtos) {
+		List<CompanyTileRecord> result = new ArrayList<CompanyTileRecord>();
+		for (CompanyDto companyDto : companyDtos) {
+			result.add(createCompanyTileRecordFromCompanyDto(companyDto));
+		}
+		return result;
+	}
+	
 	public static CompanyTileRecord createCompanyTileRecordFromCompanyDto(CompanyDto companyDto) {
 		return new CompanyTileRecord(companyDto.getCompanyId(), 
 				companyDto.getName(),

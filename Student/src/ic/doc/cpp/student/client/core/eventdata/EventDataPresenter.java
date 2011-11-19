@@ -110,9 +110,8 @@ public class EventDataPresenter extends
         	categoryName = selectedCategory.getAttribute("categoryName");  
             findValues = searchForm.getView().getValuesAsCriteria();
             findValues.addCriteria("category", categoryName);  
-        } else if (!useCategoryTreeValue.equals("true") && selectedCategory != null) {
+        } else if (!useCategoryTreeValue.equals("true")) {
         	findValues = searchForm.getView().getValuesAsCriteria();
-            findValues.addCriteria("category", categoryName); 
         } else {
         	SC.say("Please select a category to use category!");
         }

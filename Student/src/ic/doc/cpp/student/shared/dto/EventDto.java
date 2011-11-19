@@ -1,7 +1,7 @@
 package ic.doc.cpp.student.shared.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 public class EventDto implements Serializable{
 	

@@ -47,6 +47,12 @@ import ic.doc.cpp.student.client.core.automatch.AutoMatchPresenter;
 import ic.doc.cpp.student.client.core.automatch.AutoMatchView;
 import ic.doc.cpp.student.client.core.profile.InterestedCompanyWidgetPresenter;
 import ic.doc.cpp.student.client.core.profile.InterestedCompanyWidgetView;
+import ic.doc.cpp.student.client.core.newsfeed.MainfestWidgetPresenter;
+import ic.doc.cpp.student.client.core.newsfeed.MainfestWidgetView;
+import ic.doc.cpp.student.client.core.newsfeed.EventsPanelWidgetPresenter;
+import ic.doc.cpp.student.client.core.newsfeed.EventsPanelWidgetView;
+import ic.doc.cpp.student.client.core.newsfeed.EventsFeedPresenter;
+import ic.doc.cpp.student.client.core.newsfeed.EventsFeedView;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -137,5 +143,18 @@ public class ClientModule extends AbstractPresenterModule {
 				InterestedCompanyWidgetPresenter.MyView.class,
 				InterestedCompanyWidgetView.class);
 
+
+
+		bindSingletonPresenterWidget(MainfestWidgetPresenter.class,
+				MainfestWidgetPresenter.MyView.class, MainfestWidgetView.class);
+
+		bindSingletonPresenterWidget(EventsPanelWidgetPresenter.class,
+				EventsPanelWidgetPresenter.MyView.class,
+				EventsPanelWidgetView.class);
+
+
+		bindPresenter(EventsFeedPresenter.class,
+				EventsFeedPresenter.MyView.class, EventsFeedView.class,
+				EventsFeedPresenter.MyProxy.class);
 	}
 }

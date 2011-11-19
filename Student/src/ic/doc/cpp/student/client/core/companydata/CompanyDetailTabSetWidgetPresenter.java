@@ -86,20 +86,20 @@ public class CompanyDetailTabSetWidgetPresenter extends
     }  
 	  
 	public void updateDetails() {  
-        CompanyTileRecord selectedRecord  = (CompanyTileRecord)companyTileGrid.getView().getSelectedRecord();  
+        CompanyTileRecord selectedRecord  =
+        		(CompanyTileRecord)companyTileGrid.getView().getSelectedRecord();  
         int selectedTab = getView().getSelectedTabNumber();  
         if (selectedTab == 0) {  
         	getView().setCompanyViewerData(new Record[]{selectedRecord});  
         } else {
         	getView().updateTab(1, getView().getEventListGrid());
 	    	if (selectedRecord != null) {
-//	    		Criteria criteria = new Criteria();
-//	    		criteria.addCriteria("companyId", selectedRecord.getAttribute("companyId"));
-//	    		getView().eventListGridFetchData(criteria);
 	    		List<EventDto> eventDtos = selectedRecord.getEvents();
 	    		GWT.log(eventDtos.toString());
 	    		String companyName = selectedRecord.getAttribute("name");
-	    		getView().setEventListGridData(CreateRecordFromDto.createRecordsFromEventDtos(companyName, eventDtos));
+	    		getView().setEventListGridData(
+	    				CreateRecordFromDto.createRecordsFromEventDtos(
+	    						companyName, eventDtos));
 	    	}
         }  
 	}

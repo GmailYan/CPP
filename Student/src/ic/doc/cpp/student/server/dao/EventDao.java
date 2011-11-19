@@ -1,12 +1,21 @@
 package ic.doc.cpp.student.server.dao;
 
 import ic.doc.cpp.student.server.domain.Event;
+import ic.doc.cpp.student.server.domain.EventCategory;
+import ic.doc.cpp.student.server.domain.EventCategory_;
+import ic.doc.cpp.student.server.domain.Event_;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 public class EventDao extends BaseDao {
 	public Long createEvent(Event event) {
@@ -34,8 +43,12 @@ public class EventDao extends BaseDao {
 		Event event = null;
 
 		try {
-			TypedQuery<Event> query = em.createQuery("select a from Event a where a.id = ?1", Event.class);
-			query.setParameter(1, eventId);
+			CriteriaBuilder qb = em.getCriteriaBuilder();
+			CriteriaQuery<Event> cq = qb.createQuery(Event.class);
+			Root<Event> e = cq.from(Event.class);
+			Predicate condition = qb.equal(e.get(Event_.eventId), eventId);
+			cq.where(condition);
+			TypedQuery<Event> query = em.createQuery(cq);
 			event = query.getSingleResult();
 		} finally {
 			em.close();
@@ -48,12 +61,56 @@ public class EventDao extends BaseDao {
 		List<Event> list = null;
 		
 		try {
-			TypedQuery<Event> query = em.createQuery("select a from Event a", Event.class);
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Event> cq = cb.createQuery(Event.class);
+			cq.from(Event.class);
+			TypedQuery<Event> query = em.createQuery(cq);
 			list = query.getResultList();
 		} finally {
 			em.close();
 		}
 		return list;
+	}
+	
+	public List<Event> retrieveEvents(String categoryName) {
+		EntityManager em = createEntityManager();
+		List<Event> events = null;
+		
+		try {
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Event> cq = cb.createQuery(Event.class);
+			Root<Event> e = cq.from(Event.class);
+			Path<EventCategory> c = e.get(Event_.category);
+			Predicate condition = cb.like(c.get(EventCategory_.categoryName), categoryName+"%");
+			cq.where(condition);
+			TypedQuery<Event> query = em.createQuery(cq);
+			events = query.getResultList();
+		} finally {
+			em.close();
+		}
+		
+		return events;
+	}
+	
+	public List<Event> retrieveEvents(String categoryName, Date updateTime) {
+		EntityManager em = createEntityManager();
+		List<Event> events = null;
+		
+		try {
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Event> cq = cb.createQuery(Event.class);
+			Root<Event> e = cq.from(Event.class);
+			Path<EventCategory> c = e.get(Event_.category);
+			Predicate condition = cb.like(c.get(EventCategory_.categoryName), categoryName+"%");
+			Predicate updateTimecondition = cb.greaterThan(e.get(Event_.updatedTimestamp), updateTime);
+			cq.where(cb.and(condition, updateTimecondition));
+			TypedQuery<Event> query = em.createQuery(cq);
+			events = query.getResultList();
+		} finally {
+			em.close();
+		}
+		
+		return events;
 	}
 	
 	public Event updateEvent(Event event) {
@@ -88,4 +145,5 @@ public class EventDao extends BaseDao {
 			em.close();
 		}
 	}
+
 }
