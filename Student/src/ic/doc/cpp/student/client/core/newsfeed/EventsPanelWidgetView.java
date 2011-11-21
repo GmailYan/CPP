@@ -1,5 +1,6 @@
 package ic.doc.cpp.student.client.core.newsfeed;
 
+import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.ViewImpl;
 import com.google.inject.Inject;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -15,8 +16,8 @@ public class EventsPanelWidgetView extends ViewImpl implements
 	private String originalTitle = "";
 	
 	@Inject
-	public EventsPanelWidgetView() {
-		contents = new DetailListGrid();
+	public EventsPanelWidgetView(final DispatchAsync dispatcher) {
+		contents = new DetailListGrid(dispatcher);
 		contents.setID("EventsPanelWidgetView");
 		panel = new BasePanel(true, contents);
 	}
@@ -67,7 +68,6 @@ public class EventsPanelWidgetView extends ViewImpl implements
 	@Override
 	public void collapseAll() {
 		contents.collapseAll();
-		contents.setLastExpandRecord(null);
 	}
 
 }

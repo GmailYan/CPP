@@ -49,9 +49,10 @@ public class CreateDto {
 	}
 	
 	public static EventDto createEventDto(Event e) {
-		return new EventDto(e.getEventId(), e.getTitle(), e.getCategory().getCategoryId(),
+		EventDto result =  new EventDto(e.getEventId(), e.getTitle(), e.getCategory().getCategoryId(),
 				e.getCompany().getCompanyId(), e.getDescription(), e.getWebsite(),
 				e.getStart_date(), e.getEnd_date(),	e.getPicture());
+		return result;
 	}
 
 	public static CompanyDto createCompanyDto(Company company) {

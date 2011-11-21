@@ -19,7 +19,7 @@ public class CalendarView extends ViewImpl implements CalendarPresenter.MyView {
 	public CalendarView() {
 		// initialise the Calendar View layout container
 		widget = new VLayout();
-		widget.addStyleName("crm-ContextArea");
+		widget.setStyleName("crm-ContextArea");
 		widget.setWidth100(); 	
 		
 		DataSource eventDS = new DataSource();  

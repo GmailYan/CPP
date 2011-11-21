@@ -35,7 +35,8 @@ public class Feed {
 	
 	public Feed(final Long feedId, String title, String icon,
 			final EventBus eventBus, final DispatchAsync dispatcher,
-			final MainfestWidgetPresenter parent, final EventsPanelWidgetPresenter current) {
+			final MainfestWidgetPresenter parent, 
+			final EventsPanelWidgetPresenter current) {
 		this.feedId = feedId;
 		this.title = title;
 		this.icon = icon;
@@ -98,7 +99,7 @@ public class Feed {
 									}
 								}
 							});
-							eventLabels.add(panelLabel);
+							eventLabels.add(0, panelLabel);
 						}
 						updateTime = new Date();
 						label.setTitle(unReadEvents);
@@ -111,10 +112,12 @@ public class Feed {
 
 	private PanelLabel constructPanelLabel(EventDto eventDto) {
 		PanelLabel panelLabel = new PanelLabel(eventDto.getPicture(), eventDto.getTitle());
+		panelLabel.setAttribute("eventId", eventDto.getEventId());
 		panelLabel.setAttribute("description", eventDto.getDescription());
 		panelLabel.setAttribute("startDate", DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_MEDIUM).format(eventDto.getStart_date()));
 		panelLabel.setAttribute("endDate", DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_MEDIUM).format(eventDto.getEnd_date()));
 		panelLabel.setAttribute("website", eventDto.getWebsite());
+		panelLabel.setAttribute("liked", eventDto.isLikedByCurrentUser());
 		return panelLabel;
 	}
 	

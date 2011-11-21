@@ -46,10 +46,10 @@ public class NewsFeedTest {
 		EventCategoryDao eventCategoryDao = new EventCategoryDao();
 		CompanyDao companyDao = new CompanyDao();
 		Event event = new Event();
-		event.setTitle("Microsoft Summer Internship");
+		event.setTitle("Intel Summer Internship");
 		event.setCategory(eventCategoryDao.retrieveEventCategory(2L));
 		event.setCompany(companyDao.retrieveCompany(1L));
-		event.setPicture("companyLogo/microsoft.jpg");
+		event.setPicture("companyLogo/intel.jpg");
 		event.setCreatedTimestamp(currentDate);
 		event.setUpdatedTimestamp(currentDate);
 		event.setDescription("A good internship.");

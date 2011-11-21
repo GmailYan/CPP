@@ -7,14 +7,18 @@ import com.google.inject.Inject;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
+import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.ButtonItem;
+import com.smartgwt.client.widgets.form.fields.LinkItem;
 import com.smartgwt.client.widgets.form.fields.PasswordItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.form.validator.LengthRangeValidator;
 import com.smartgwt.client.widgets.form.validator.MatchesFieldValidator;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
+import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
@@ -31,8 +35,10 @@ public class StudentUserProfileView extends ViewImpl implements
 	private DynamicForm basicInformationForm;
 	private DynamicForm passwordSettingForm;
 	
-	private ButtonItem basicInformationUpdateButton;
-	private ButtonItem passwordSettingUpdateButton;
+	private IButton basicInformationUpdateButton;
+	private IButton passwordSettingUpdateButton;
+	
+	private LinkItem cvUploadLinkItem;
 	
 	private Tab interestedCompanyTab;
 	
@@ -67,6 +73,30 @@ public class StudentUserProfileView extends ViewImpl implements
 
 	public Tab initPasswordSettingTab() {
 		Tab passwordSettingTab = new Tab("Password Setting");
+
+		VLayout panel = new VLayout();
+		VLayout header = initHeader("Password Setting", "You can change your password here.");
+		header.setStyleName("crm-Wizard-Header");
+		VLayout southLayout = new VLayout();
+		
+		VLayout body = initPasswordSettingTabBody();
+		
+		passwordSettingUpdateButton = new IButton("Update");
+		VLayout footer = initFooter(passwordSettingUpdateButton);
+		
+		southLayout.addMember(body);
+		southLayout.addMember(footer);
+
+		panel.addMember(header);
+		panel.addMember(southLayout);
+			
+		passwordSettingTab.setPane(panel);
+		return passwordSettingTab;
+	}
+	
+	
+	public VLayout initPasswordSettingTabBody() {
+		VLayout body = new VLayout();
 		
 		passwordSettingForm = new DynamicForm();
 		
@@ -89,21 +119,43 @@ public class StudentUserProfileView extends ViewImpl implements
 		matchesValidator.setOtherField("newPassword");
 		matchesValidator.setErrorMessage("Passwords do not match");
 		newPasswordItem2.setValidators(matchesValidator);
+		passwordSettingForm.setFields(originalPassword, newPasswordItem, newPasswordItem2);
 		
-		passwordSettingUpdateButton = new ButtonItem("passwordUpdateButton", "Update");
+		body.setStyleName("crm-Wizard-Body");
+		body.addMember(passwordSettingForm);
 		
-		passwordSettingForm.setFields(originalPassword, newPasswordItem, newPasswordItem2, passwordSettingUpdateButton);
-		
-		passwordSettingTab.setPane(passwordSettingForm);
-		return passwordSettingTab;
+		return body;
 	}
-
 
 
 	public Tab initBasicInformationTab() {
 		Tab basciInformationTab = new Tab("User Information");
 		
+		VLayout panel = new VLayout();
+		VLayout header = initHeader("Basic Information", "You can update your information here.");
+		header.setStyleName("crm-Wizard-Header");
+		VLayout southLayout = new VLayout();
+		VLayout body = initBasicInformationTabBody();
+		basicInformationUpdateButton = new IButton("Update");
+		
+		VLayout footer = initFooter(basicInformationUpdateButton);
+
+		southLayout.addMember(body);
+		southLayout.addMember(footer);
+		
+		panel.addMember(header);
+	    panel.addMember(southLayout);
+		
+		basciInformationTab.setPane(panel);
+		return basciInformationTab;
+	}
+	
+	
+	
+	private VLayout initBasicInformationTabBody() {
 		basicInformationForm = new DynamicForm();
+		basicInformationForm.setCellPadding(2);
+		basicInformationForm.setWrapItemTitles(false);
 		
 		TextItem firstNameItem = new TextItem("firstName", "First Name");
 		firstNameItem.setLength(100);
@@ -124,16 +176,88 @@ public class StudentUserProfileView extends ViewImpl implements
 		emailValidator.setExpression("^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$");
 		emailItem.setValidators(emailValidator);
 		
-		basicInformationUpdateButton = new ButtonItem("basicUpdateButton", "Update");
+		cvUploadLinkItem = new LinkItem("uploadCV");
+		cvUploadLinkItem.setTitle("Upload CV");
+		cvUploadLinkItem.setLinkTitle("Click here");
 		
-		basicInformationForm.setFields(firstNameItem, lastNameItem, genderItem, emailItem, basicInformationUpdateButton);
+		basicInformationForm.setFields(firstNameItem, lastNameItem, genderItem, emailItem, cvUploadLinkItem);
 		
-		basciInformationTab.setPane(basicInformationForm);
-		return basciInformationTab;
+		VLayout body = new VLayout();
+		body.setStyleName("crm-Wizard-Body");
+		body.addMember(basicInformationForm);
+		
+		return body;
 	}
-	
-	
-	
+
+
+
+	public static VLayout initHeader(String title, String description) {
+	    // initialise the Header layout container
+	    VLayout header = new VLayout();
+	    header.setWidth100();
+	    header.setHeight(58);
+
+	    HLayout line1 = new HLayout();
+	    line1.setWidth100();
+	    line1.setHeight100();
+
+	    HLayout line2 = new HLayout();
+	    line2.setWidth100();
+	    line2.setHeight100();
+
+	    // initialise the Name label
+	    Label name = new Label();
+	    name.setStyleName("crm-Wizard-Name");
+	    name.setContents(title);
+	    name.setWidth100();
+
+	    // initialise the Description label
+	    Label descriptionLabel = new Label();
+	    descriptionLabel.setStyleName("crm-Wizard-Description");
+	    descriptionLabel.setContents(description);
+	    descriptionLabel.setWidth100();
+
+	    // add the labels to the nested layout containers
+	    line1.addMember(name);
+	    line2.addMember(descriptionLabel);
+
+	    // add the North and South layout containers to the main layout container
+	    header.addMember(line1);
+	    header.addMember(line2);
+	    return header;
+	}
+
+	private VLayout initFooter(IButton updateButton) {
+		int footerHeight = 48;
+		    // initialise the Footer layout container
+		VLayout footer = new VLayout();
+		footer.setStyleName("crm-Wizard-Footer");
+		footer.setWidth100();
+		footer.setHeight(footerHeight);
+		
+		HLayout hLayout = new HLayout();
+		hLayout.setWidth100();
+		hLayout.setHeight(footerHeight);
+		
+		updateButton.setShowRollOver(true);
+		updateButton.setShowDisabled(true);
+		updateButton.setShowDown(true);
+		
+		
+		// layout the OK and Cancel buttons
+		hLayout.setLayoutMargin(8);
+		hLayout.addMember(new LayoutSpacer());
+		hLayout.addMember(updateButton);
+		LayoutSpacer padding = new LayoutSpacer();
+		padding.setWidth(8);
+		hLayout.addMember(padding);
+		
+		// add the nested layout container to the main layout container
+		footer.addMember(hLayout);
+
+		return footer;
+	}
+
 	@Override
 	public HandlerRegistration addPasswordSettingUpdateButtonClickHandler(
 			ClickHandler handler) {
@@ -204,7 +328,7 @@ public class StudentUserProfileView extends ViewImpl implements
 		return interestedCompanyTab.addTabSelectedHandler(handler);
 	}
 
-
+	
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (slot == StudentUserProfilePresenter.TYPE_RevealInterestedCompany) {
@@ -213,6 +337,12 @@ public class StudentUserProfileView extends ViewImpl implements
 				interestedCompanySlot.setMembers((VLayout)content);
 			}
 		}
+	}
+	
+	@Override
+	public HandlerRegistration addUploadCVLinkItemClickHandler(
+			com.smartgwt.client.widgets.form.fields.events.ClickHandler handler) {
+		return cvUploadLinkItem.addClickHandler(handler);
 	}
 	
 	

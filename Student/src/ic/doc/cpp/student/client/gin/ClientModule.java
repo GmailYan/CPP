@@ -53,6 +53,8 @@ import ic.doc.cpp.student.client.core.newsfeed.EventsPanelWidgetPresenter;
 import ic.doc.cpp.student.client.core.newsfeed.EventsPanelWidgetView;
 import ic.doc.cpp.student.client.core.newsfeed.EventsFeedPresenter;
 import ic.doc.cpp.student.client.core.newsfeed.EventsFeedView;
+import ic.doc.cpp.student.client.core.profile.FileUploadPopupWidgetPresenter;
+import ic.doc.cpp.student.client.core.profile.FileUploadPopupWidgetView;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -156,5 +158,9 @@ public class ClientModule extends AbstractPresenterModule {
 		bindPresenter(EventsFeedPresenter.class,
 				EventsFeedPresenter.MyView.class, EventsFeedView.class,
 				EventsFeedPresenter.MyProxy.class);
+
+		bindSingletonPresenterWidget(FileUploadPopupWidgetPresenter.class,
+				FileUploadPopupWidgetPresenter.MyView.class,
+				FileUploadPopupWidgetView.class);
 	}
 }

@@ -21,7 +21,9 @@
 	<inherits name="com.smartclient.theme.enterpriseblue.EnterpriseBlue"/>
 	<inherits name="com.smartclient.theme.enterpriseblue.EnterpriseBlueResources"/> 
 
+<!-- 	<inherits name="org.gwtmultipage.gwtmultipage" /> -->
 	<!-- Specify the app entry point class.                         -->
+<!-- 	<entry-point class="org.gwtmultipage.client.EntrypointDispatcher" /> -->
 	<entry-point class='ic.doc.cpp.student.client.Student'/>
 
 	<!-- Specify the paths for translatable code                    -->

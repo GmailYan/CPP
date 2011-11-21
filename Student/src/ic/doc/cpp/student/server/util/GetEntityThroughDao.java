@@ -6,8 +6,10 @@ import javax.servlet.http.HttpSession;
 import com.google.inject.Provider;
 
 import ic.doc.cpp.student.server.dao.CompanyDao;
+import ic.doc.cpp.student.server.dao.EventDao;
 import ic.doc.cpp.student.server.dao.StudentUserDao;
 import ic.doc.cpp.student.server.domain.Company;
+import ic.doc.cpp.student.server.domain.Event;
 import ic.doc.cpp.student.server.domain.StudentUser;
 
 public class GetEntityThroughDao {
@@ -21,5 +23,10 @@ public class GetEntityThroughDao {
 	public static Company getCompany(Long companyId) {
 		CompanyDao companyDao = new CompanyDao();
 		return companyDao.retrieveCompany(companyId);
+	}
+	
+	public static Event getEvent(Long eventId) {
+		EventDao eventDao = new EventDao();
+		return eventDao.retrieveEvent(eventId);
 	}
 }

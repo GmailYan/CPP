@@ -27,8 +27,8 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
-import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
 import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
 
@@ -38,16 +38,12 @@ public class StudentUserProfilePresenter
 
 	private final DispatchAsync dispatcher;
 	private final InterestedCompanyWidgetPresenter interestedCompanyWidgetPresenter;
+	private final FileUploadPopupWidgetPresenter fileUploadPresenter;
 	
-	public static final Object TYPE_RevealInterestedCompany = new Object(); 
+	public static final Object TYPE_RevealInterestedCompany = new Object();
+	public static final Object TYPE_RevealCVUploader = new Object(); 
 	
 	public interface MyView extends View {
-
-		HandlerRegistration addPasswordSettingUpdateButtonClickHandler(
-				ClickHandler handler);
-
-		HandlerRegistration addBasicInformationUpdateButtonClickHandler(
-				ClickHandler handler);
 
 		void setData(StudentUserDto studentUserDto);
 
@@ -63,6 +59,15 @@ public class StudentUserProfilePresenter
 
 		HandlerRegistration addTabSelectedHandler(TabSelectedHandler handler);
 
+		HandlerRegistration addBasicInformationUpdateButtonClickHandler(
+				com.smartgwt.client.widgets.events.ClickHandler handler);
+
+		HandlerRegistration addPasswordSettingUpdateButtonClickHandler(
+				com.smartgwt.client.widgets.events.ClickHandler handler);
+
+		HandlerRegistration addUploadCVLinkItemClickHandler(
+				com.smartgwt.client.widgets.form.fields.events.ClickHandler handler);
+
 	}
 
 	@ProxyCodeSplit
@@ -74,10 +79,12 @@ public class StudentUserProfilePresenter
 	@Inject
 	public StudentUserProfilePresenter(final EventBus eventBus, final MyView view,
 			final MyProxy proxy, final DispatchAsync dispatcher, 
-			final InterestedCompanyWidgetPresenter interestedCompanyWidgetPresenter) {
+			final InterestedCompanyWidgetPresenter interestedCompanyWidgetPresenter,
+			final FileUploadPopupWidgetPresenter fileUploadPresenter) {
 		super(eventBus, view, proxy);
 		this.dispatcher = dispatcher;
 		this.interestedCompanyWidgetPresenter = interestedCompanyWidgetPresenter;
+		this.fileUploadPresenter = fileUploadPresenter;
 	}
 
 	@Override
@@ -89,7 +96,8 @@ public class StudentUserProfilePresenter
 	@Override
 	protected void onBind() {
 		super.onBind();
-		registerHandler(getView().addBasicInformationUpdateButtonClickHandler(new ClickHandler() {
+		registerHandler(getView().addBasicInformationUpdateButtonClickHandler(
+				new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -149,18 +157,28 @@ public class StudentUserProfilePresenter
 				setInSlot(TYPE_RevealInterestedCompany, interestedCompanyWidgetPresenter);
 			}
 		}));
+		
+		registerHandler(getView().addUploadCVLinkItemClickHandler(
+				new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
+			
+			@Override
+			public void onClick(
+					com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
+				addToPopupSlot(fileUploadPresenter);
+			}
+		}));
 	}
 
 	@Override
 	protected void onReset() {
 		super.onReset();
-		retrieveStudentInformation();
 	}
 
 
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		retrieveStudentInformation();
 	}
 
 	private void retrieveStudentInformation() {

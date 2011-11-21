@@ -1,6 +1,5 @@
 package ic.doc.cpp.student.client.core.profile;
 
-import ic.doc.cpp.student.client.util.CreateRecordFromDto;
 import ic.doc.cpp.student.shared.action.RemoveStudentInterestedCompany;
 import ic.doc.cpp.student.shared.action.RemoveStudentInterestedCompanyResult;
 import ic.doc.cpp.student.shared.action.RetrieveStudentInterestedCompanies;
@@ -29,7 +28,6 @@ import com.smartgwt.client.widgets.events.ShowContextMenuHandler;
 import com.smartgwt.client.widgets.menu.Menu;
 import com.smartgwt.client.widgets.menu.events.ClickHandler;
 import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
-import com.smartgwt.client.widgets.tile.TileGrid;
 import com.smartgwt.client.widgets.tile.TileRecord;
 
 public class InterestedCompanyWidgetPresenter extends
@@ -38,36 +36,18 @@ public class InterestedCompanyWidgetPresenter extends
 	private final DispatchAsync dispatcher;
 	
 	public interface MyView extends View {
-
 		void setData(List<CompanyDto> companys);
-
 		HandlerRegistration addRemoveMenuItemClickHandler(ClickHandler handler);
-
 		TileRecord getSelectedRecord();
-
-		void deleteRecord(Record record);
-
 		HandlerRegistration addShowContextMenuHandler(ShowContextMenuHandler showContextMenuHandler);
-
 		Menu getInterestedCompanyListMenu();
-
 		HandlerRegistration addDoubleClickHandler(DoubleClickHandler handler);
-
 		Canvas getDetailViewer();
-
 		void setDeatilViewerData(Record record);
-
 		HandlerRegistration addWinModalCloseClickHandler(
 				CloseClickHandler closeClickHandler);
-
 		void hideWinModal();
-
 		void showWinModal();
-
-		void addRecord(Record record);
-
-		TileGrid getTileGrid();
-		
 	}
 
 	@Inject
@@ -92,8 +72,10 @@ public class InterestedCompanyWidgetPresenter extends
 			@Override
 			public void onDoubleClick(DoubleClickEvent event) {
 				Record record = getView().getSelectedRecord();
-				getView().setDeatilViewerData(record);
-				getView().showWinModal();
+				if (record != null) {
+					getView().setDeatilViewerData(record);
+					getView().showWinModal();
+				}
 			}
 		}));
 		
@@ -140,9 +122,11 @@ public class InterestedCompanyWidgetPresenter extends
 	}
 
 	private void retrieveInterestedCompanyData() {
+		GWT.log("Retrieveing interesting company...");
+		
 		dispatcher.execute(new RetrieveStudentInterestedCompanies(), 
 				new AsyncCallback<RetrieveStudentInterestedCompaniesResult>() {
-
+			
 			@Override
 			public void onFailure(Throwable caught) {
 				GWT.log("fail on retrieveInterestedCompanyData()...");
@@ -151,26 +135,11 @@ public class InterestedCompanyWidgetPresenter extends
 			@Override
 			public void onSuccess(RetrieveStudentInterestedCompaniesResult result) {
 				if (result != null) {
-					List<CompanyDto> companyDto = result.getCompanyDto();
-					updateDataSource(companyDto);
+					getView().setData(result.getCompanyDto());
 				}
 			}
 			
 		});
 	}
 	
-	private void updateDataSource(List<CompanyDto> companyDtos) {
-		Record[] latestRecords = new Record[companyDtos.size()];
-		int i = 0;
-		for (CompanyDto companyDto : companyDtos) {
-			Record record = CreateRecordFromDto.createCompanyTileRecordFromCompanyDto(companyDto);
-			latestRecords[i++] = record;
-		}
-		getView().getTileGrid().setData(latestRecords);
-	}
-
-	@Override
-	protected void onReveal() {
-		super.onReveal();
-	}
 }

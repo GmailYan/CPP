@@ -24,7 +24,8 @@ public class AddStudentInterestedCompanyActionHandler
 	private final Provider<HttpServletRequest> provider;
 	
 	@Inject
-	public AddStudentInterestedCompanyActionHandler(final Provider<HttpServletRequest> provider) {
+	public AddStudentInterestedCompanyActionHandler(
+			final Provider<HttpServletRequest> provider) {
 		this.provider = provider;
 	}
 
@@ -38,7 +39,7 @@ public class AddStudentInterestedCompanyActionHandler
 			
 			if (student != null) {
 				List<Company> companys = student.getCompanys();
-				if (!isDuplicatedInterestedEvent(companys, action.getCompanyId())) {
+				if (!isDuplicatedInterestedCompany(companys, action.getCompanyId())) {
 					Company company = GetEntityThroughDao.getCompany(action.getCompanyId());
 					companys.add(company);
 					StudentUserDao studentDao = new StudentUserDao();
@@ -60,7 +61,7 @@ public class AddStudentInterestedCompanyActionHandler
 		return result;
 	}
 
-	private boolean isDuplicatedInterestedEvent(List<Company> companys,
+	private boolean isDuplicatedInterestedCompany(List<Company> companys,
 			Long companyId) {
 		boolean flag = false;
 		for (Company company : companys) {

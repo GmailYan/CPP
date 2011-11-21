@@ -10,7 +10,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 
 public class Student implements EntryPoint {
-
 	private final ClientGinjector ginjector = GWT.create(ClientGinjector.class);
 
 	interface GlobalResources extends ClientBundle {

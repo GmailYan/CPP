@@ -17,6 +17,8 @@ public class EventDto implements Serializable{
 	protected Date end_date;
 	protected String picture;
 	
+	protected boolean likedByCurrentUser;
+	
 	public EventDto() {}
 
 	public EventDto(Long eventId, String title, Long categoryId,
@@ -32,6 +34,8 @@ public class EventDto implements Serializable{
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.picture = picture;
+		
+		this.likedByCurrentUser = false;
 	}
 
 	public Long getCategoryId() {
@@ -106,6 +110,14 @@ public class EventDto implements Serializable{
 		this.picture = picture;
 	}
 	
+	public boolean isLikedByCurrentUser() {
+		return likedByCurrentUser;
+	}
+
+	public void setLikedByCurrentUser(boolean likedByCurrentUser) {
+		this.likedByCurrentUser = likedByCurrentUser;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

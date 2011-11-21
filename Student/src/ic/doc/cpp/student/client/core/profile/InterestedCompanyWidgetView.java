@@ -39,6 +39,7 @@ public class InterestedCompanyWidgetView extends ViewImpl implements
 	@Inject
 	public InterestedCompanyWidgetView() {
 		widget = new VLayout();
+
 		dataSource = StudentInterestedCompanyDetailDataSource.getInstance();
 
 		// set up detail viewer
@@ -73,8 +74,13 @@ public class InterestedCompanyWidgetView extends ViewImpl implements
 	    DetailViewerField cidField = new DetailViewerField("companyId");
 	    
 	    interestedCompanyTileGrid.setFields(pictureField, nameField, cidField);
+	    interestedCompanyTileGrid.setStyleName("crm-Wizard-Body");
 	    
-		widget.setMembers(interestedCompanyTileGrid);
+	    VLayout header = StudentUserProfileView.initHeader("Company Information", "View companies' information you are interested in");
+	    header.setStyleName("crm-Wizard-Header");
+	    
+	    widget.setMembers(header, interestedCompanyTileGrid);
+		
 	}
 
 	private void setupDetailViewer() {
@@ -113,16 +119,6 @@ public class InterestedCompanyWidgetView extends ViewImpl implements
 		return widget;
 	}
 	
-	@Override
-	public void deleteRecord(Record record) {
-		interestedCompanyTileGrid.removeData(record);
-	}
-	
-	@Override
-	public void addRecord(Record record) {
-		interestedCompanyTileGrid.addData(record);
-	}
-
 	@Override
 	public TileRecord getSelectedRecord() {
 		return interestedCompanyTileGrid.getSelectedRecord();
@@ -169,9 +165,5 @@ public class InterestedCompanyWidgetView extends ViewImpl implements
 	public void showWinModal() {
 		winModal.show();
 	}
-	
-	@Override
-	public TileGrid getTileGrid() {
-		return interestedCompanyTileGrid;
-	}
+
 }

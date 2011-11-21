@@ -1,6 +1,12 @@
 package ic.doc.cpp.student.client.core.newsfeed;
 
+import ic.doc.cpp.student.shared.action.AddStudentInterestedEvent;
+import ic.doc.cpp.student.shared.action.AddStudentInterestedEventResult;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -20,7 +26,10 @@ public class DetailListGrid extends ListGrid {
 	
 	private ListGridRecord lastExpandRecord;
 	
-	public DetailListGrid() {
+	private final DispatchAsync dispatcher;
+	
+	public DetailListGrid(final DispatchAsync dispatcher) {
+		this.dispatcher = dispatcher;
 		setCanExpandRecords(true);
 		setCanExpandMultipleRecords(false);
 		addRecordExpandHandler(new RecordExpandHandler() {
@@ -66,7 +75,23 @@ public class DetailListGrid extends ListGrid {
         IButton likeButton = new IButton("Like");
         likeButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-            	// TODO: add to like event list
+            	dispatcher.execute(new AddStudentInterestedEvent(
+            			record.getAttributeAsLong("eventId")),
+            			new AsyncCallback<AddStudentInterestedEventResult>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("error","Adding interested company fail...");
+					}
+
+					@Override
+					public void onSuccess(AddStudentInterestedEventResult result) {
+						collapseAll();
+						record.setAttribute("liked", true);
+						refreshFields();
+						SC.say("Message", result.getMessage());
+					}
+				});
             }
         });
 
@@ -93,13 +118,11 @@ public class DetailListGrid extends ListGrid {
 		return lastExpandRecord;
 	}
 
-	public void setLastExpandRecord(ListGridRecord lastExpandRecord) {
-		this.lastExpandRecord = lastExpandRecord;
-	}
-
 	public void collapseAll() {
-		if (lastExpandRecord != null)
+		if (lastExpandRecord != null) {
 			collapseRecord(lastExpandRecord);
+			lastExpandRecord = null;
+		}
 	}
 
 }

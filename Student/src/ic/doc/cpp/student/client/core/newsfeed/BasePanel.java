@@ -21,7 +21,6 @@ public class BasePanel extends VLayout {
 	public BasePanel(boolean hasParent, ListGrid contents) {
 		this.hasParent = hasParent;
 		this.contents = contents;
-		
 	  	contents.setWidth100();  
 	  	contents.setHeight100();  
 	  	contents.setShowAllRecords(true);  
@@ -45,6 +44,9 @@ public class BasePanel extends VLayout {
 				sb.append("<span class=\"listViewTitle\" \">");
 				sb.append(record.getAttributeAsString("title"));
 				sb.append("</span>");
+				if (record.getAttributeAsBoolean("liked")) {
+					sb.append("<br><span class=\"listViewTitle\" \">Liked</span>");
+				}
 				return sb.toString();
 			}
 		});
